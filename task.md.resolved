@@ -1,0 +1,7 @@
+# Portfolio Website - Task List
+
+- `[ ]` Create `styles.css` with full design system (colors, typography, animations, layout)
+- `[ ]` Create `index.html` with all sections (hero, experience, education, projects, certs, footer)
+- `[ ]` Create `script.js` with scroll animations and smooth navigation
+- `[ ]` Verify in browser - check all sections, animations, and responsiveness
+- `[ ]` Create walkthrough artifact
