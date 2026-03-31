@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youssif Ashmawy - Portfolio</title>
-    <meta name="description" content="Personal portfolio showcasing educational journey, work experience, projects, and certifications">
+    <meta name="description"
+        content="Personal portfolio showcasing educational journey, work experience, projects, and certifications">
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
 </head>
+
 <body>
-    <!-- Ambient Background Blobs -->
+    <!-- Enhanced Background Layers -->
     <div class="bg-blobs">
         <div class="blob"></div>
         <div class="blob"></div>
         <div class="blob"></div>
     </div>
+    
+    <div class="particle-field" id="particleField"></div>
+    
+    <div class="gradient-orb"></div>
+    
+    <div class="mouse-glow" id="mouseGlow"></div>
 
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
@@ -41,13 +51,26 @@
                 Youssif <span class="gradient-text">Ashmawy</span>
             </h1>
             <p class="hero-tagline">
-                IT Systems Engineer and Computer Science graduate specializing in cloud platforms, AI/ML systems, and cybersecurity automation. Passionate about building innovative solutions and transforming complex challenges into opportunities.
+                IT Systems Engineer and Computer Science graduate specializing in cloud platforms, AI/ML systems, and
+                cybersecurity automation. Passionate about building innovative solutions and transforming complex
+                challenges into opportunities.
             </p>
             <div class="hero-cta-group">
                 <a href="#projects" class="btn btn-primary">View My Work</a>
                 <a href="mailto:ashmawyyoussif@gmail.com" class="btn btn-outline">Get In Touch</a>
             </div>
         </div>
+        
+        <!-- Neural Network Animation -->
+        <div class="neural-network" id="neuralNetwork">
+            <svg width="700" height="400" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Connections will be dynamically generated -->
+                <g id="connections"></g>
+                <!-- Nodes will be dynamically generated -->
+                <g id="nodes"></g>
+            </svg>
+        </div>
+        
         <div class="scroll-indicator">
             <div class="mouse"></div>
             <span>Scroll</span>
@@ -61,7 +84,7 @@
             <h2 class="section-title">Work Experience</h2>
             <div class="section-divider"></div>
         </div>
-        
+
         <div class="timeline">
             <div class="timeline-item reveal reveal-delay-1">
                 <div class="timeline-dot"></div>
@@ -70,16 +93,20 @@
                     <h3 class="timeline-role">IT Systems Engineer</h3>
                     <div class="timeline-company">Kuberox Technologies</div>
                     <p class="timeline-desc">
-                        Deployed and configured Nutanix hyperconverged cloud Kubernetes and AI platforms, integrated Hugging Face models, 
+                        Deployed and configured Nutanix hyperconverged cloud Kubernetes and AI platforms, integrated
+                        Hugging Face models,
                         and completed client environment setup, accelerating production readiness.
                     </p>
                     <p class="timeline-desc">
-                        Built a dependency-aware Kubernetes migration orchestrator with FastAPI and NetworkX analyzing 30+ CRDs, improving 
+                        Built a dependency-aware Kubernetes migration orchestrator with FastAPI and NetworkX analyzing
+                        30+ CRDs, improving
                         migration success rate by 30% and enabling staged workload execution.
                     </p>
                     <p class="timeline-desc">
-                        Conducted AI research and prompt engineering to optimize Hugging Face model usage, reducing token consumption by 
-                        approximately 25%, while designing a two-phase migration workflow with Velero to minimize downtime by 50%.
+                        Conducted AI research and prompt engineering to optimize Hugging Face model usage, reducing
+                        token consumption by
+                        approximately 25%, while designing a two-phase migration workflow with Velero to minimize
+                        downtime by 50%.
                     </p>
                     <div class="timeline-tags">
                         <span class="tag">Nutanix</span>
@@ -99,15 +126,18 @@
                     <h3 class="timeline-role">Cybersecurity Assistant</h3>
                     <div class="timeline-company">Hydro Ottawa</div>
                     <p class="timeline-desc">
-                        Automated GSD permission reports using Python, Node.js, Google APIs, and AWS, cutting manual effort by 75% and 
+                        Automated GSD permission reports using Python, Node.js, Google APIs, and AWS, cutting manual
+                        effort by 75% and
                         increasing data accuracy by 30%.
                     </p>
                     <p class="timeline-desc">
-                        Built on-demand reporting and executive dashboards with Google Apps Script and Python, reducing report generation 
+                        Built on-demand reporting and executive dashboards with Google Apps Script and Python, reducing
+                        report generation
                         latency by 60%.
                     </p>
                     <p class="timeline-desc">
-                        Developed automated retention workflows leveraging Iron Mountain API and mentored an intern, improving compliance 
+                        Developed automated retention workflows leveraging Iron Mountain API and mentored an intern,
+                        improving compliance
                         readiness by 40%.
                     </p>
                     <div class="timeline-tags">
@@ -130,7 +160,7 @@
             <h2 class="section-title">Education</h2>
             <div class="section-divider"></div>
         </div>
-        
+
         <div class="education-grid">
             <div class="edu-card reveal reveal-delay-1">
                 <div class="edu-icon">🎓</div>
@@ -138,8 +168,8 @@
                 <div class="edu-school">Carleton University</div>
                 <div class="edu-year">Sep 2022 – Aug 2025</div>
                 <p class="edu-desc">
-                    Graduated with High Distinction in Computer Science. Specialized in software engineering, 
-                    AI/ML systems, and cybersecurity. Developed strong foundation in algorithms, data structures, 
+                    Graduated with High Distinction in Computer Science. Specialized in software engineering,
+                    AI/ML systems, and cybersecurity. Developed strong foundation in algorithms, data structures,
                     and distributed systems.
                 </p>
             </div>
@@ -153,7 +183,7 @@
             <h2 class="section-title">Projects</h2>
             <div class="section-divider"></div>
         </div>
-        
+
         <div class="projects-grid">
             <div class="project-card reveal reveal-delay-1">
                 <div class="project-image">
@@ -168,8 +198,8 @@
                 <div class="project-body">
                     <h3 class="project-title">FancyGit</h3>
                     <p class="project-desc">
-                        Intelligent CLI wrapper for Git that provides AI-generated explanations, dry-run previews, and 
-                        interactive learning quizzes, simplifying Git for beginners. Implemented advanced commands 
+                        Intelligent CLI wrapper for Git that provides AI-generated explanations, dry-run previews, and
+                        interactive learning quizzes, simplifying Git for beginners. Implemented advanced commands
                         consolidating multi-step operations into single safe actions.
                     </p>
                     <div class="project-tech">
@@ -196,8 +226,8 @@
                 <div class="project-body">
                     <h3 class="project-title">TactileNet</h3>
                     <p class="project-desc">
-                        Expanded tactile dataset and integrated multimodal feedback using Transformers, boosting model 
-                        robustness by 25%. Optimized training pipeline with PyTorch, PEFT, LoRA, and Bitsandbytes, 
+                        Expanded tactile dataset and integrated multimodal feedback using Transformers, boosting model
+                        robustness by 25%. Optimized training pipeline with PyTorch, PEFT, LoRA, and Bitsandbytes,
                         improving generalization and inference quality by 20%.
                     </p>
                     <div class="project-tech">
@@ -224,8 +254,9 @@
                 <div class="project-body">
                     <h3 class="project-title">LeGraphTheory</h3>
                     <p class="project-desc">
-                        Constructed NBA assist networks from PBP Stats API data, modeled as weighted graphs with NetworkX 
-                        to analyze team structure. Computed graph metrics and visualized team dynamics, revealing 
+                        Constructed NBA assist networks from PBP Stats API data, modeled as weighted graphs with
+                        NetworkX
+                        to analyze team structure. Computed graph metrics and visualized team dynamics, revealing
                         patterns consistent with Braess' Paradox and star-player acquisition impacts.
                     </p>
                     <div class="project-tech">
@@ -247,76 +278,97 @@
             <h2 class="section-title">Certifications</h2>
             <div class="section-divider"></div>
         </div>
-        
+
         <div class="certs-grid">
             <div class="cert-card reveal reveal-delay-1">
                 <div class="cert-badge">
-                    <img src="images/NCA.png" alt="Nutanix Certified Associate" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    <img src="images/NCA.png" alt="Nutanix Certified Associate"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                 </div>
                 <h3 class="cert-name">Nutanix Certified Associate 6</h3>
                 <div class="cert-issuer">Nutanix</div>
                 <div class="cert-date">Expires Feb 16, 2029</div>
-                <a href="https://www.credly.com/earner/earned/badge/719f1e82-f7e3-4fc0-9a8e-8bf27473575e" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+                <a href="https://www.credly.com/earner/earned/badge/719f1e82-f7e3-4fc0-9a8e-8bf27473575e"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
             </div>
 
             <div class="cert-card reveal reveal-delay-2">
                 <div class="cert-badge">
-                    <img src="images/MCI.png" alt="Nutanix Certified Professional - Multicloud Infrastructure" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    <img src="images/MCI.png" alt="Nutanix Certified Professional - Multicloud Infrastructure"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                 </div>
                 <h3 class="cert-name">Nutanix Certified Professional - Multicloud Infrastructure 6</h3>
                 <div class="cert-issuer">Nutanix</div>
                 <div class="cert-date">Expires Feb 16, 2029</div>
-                <a href="https://www.credly.com/earner/earned/badge/c03a7f28-d514-40d4-81d9-3a3b669660ad" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+                <a href="https://www.credly.com/earner/earned/badge/c03a7f28-d514-40d4-81d9-3a3b669660ad"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
             </div>
 
             <div class="cert-card reveal reveal-delay-3">
                 <div class="cert-badge">
-                    <img src="images/AI.png" alt="Nutanix Certified Professional - Artificial Intelligence" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    <img src="images/AI.png" alt="Nutanix Certified Professional - Artificial Intelligence"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                 </div>
                 <h3 class="cert-name">Nutanix Certified Professional - Artificial Intelligence 6</h3>
                 <div class="cert-issuer">Nutanix</div>
                 <div class="cert-date">Expires Feb 27, 2029</div>
-                <a href="https://www.credly.com/earner/earned/badge/173c21e8-bbc3-4571-a920-e00759ea27ff" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+                <a href="https://www.credly.com/earner/earned/badge/173c21e8-bbc3-4571-a920-e00759ea27ff"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
             </div>
 
             <div class="cert-card reveal reveal-delay-1">
                 <div class="cert-badge">
-                    <img src="images/CN.png" alt="Nutanix Certified Professional - Cloud Native" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    <img src="images/CN.png" alt="Nutanix Certified Professional - Cloud Native"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                 </div>
                 <h3 class="cert-name">Nutanix Certified Professional - Cloud Native 6</h3>
                 <div class="cert-issuer">Nutanix</div>
                 <div class="cert-date">Expires Feb 16, 2029</div>
-                <a href="https://www.credly.com/earner/earned/badge/2fb908e6-c7a8-4efb-be6a-c58316b324f5" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+                <a href="https://www.credly.com/earner/earned/badge/2fb908e6-c7a8-4efb-be6a-c58316b324f5"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
             </div>
 
             <div class="cert-card reveal reveal-delay-2">
                 <div class="cert-badge">
-                    <img src="images/MCA.png" alt="Nutanix Certified Professional - Multicloud Automation" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    <img src="images/MCA.png" alt="Nutanix Certified Professional - Multicloud Automation"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                 </div>
                 <h3 class="cert-name">Nutanix Certified Professional - Multicloud Automation 6</h3>
                 <div class="cert-issuer">Nutanix</div>
                 <div class="cert-date">Expires Feb 16, 2029</div>
-                <a href="https://www.credly.com/earner/earned/badge/1290c481-fd41-4cbe-a071-adcb6382dbd8" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+                <a href="https://www.credly.com/earner/earned/badge/1290c481-fd41-4cbe-a071-adcb6382dbd8"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
             </div>
 
             <div class="cert-card reveal reveal-delay-3">
                 <div class="cert-badge">
-                    <img src="images/RHCSA.png" alt="Red Hat Certified System Administrator" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    <img src="images/RHCSA.png" alt="Red Hat Certified System Administrator"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                 </div>
                 <h3 class="cert-name">Red Hat Certified System Administrator (RHCSA)</h3>
                 <div class="cert-issuer">Red Hat</div>
                 <div class="cert-date">Expires Nov 24, 2028</div>
-                <a href="https://www.credly.com/earner/earned/badge/5f5ac1c4-7b6b-4fce-be3f-421618be936a" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+                <a href="https://www.credly.com/earner/earned/badge/5f5ac1c4-7b6b-4fce-be3f-421618be936a"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
             </div>
 
             <div class="cert-card reveal reveal-delay-1">
                 <div class="cert-badge">
-                    <img src="images/GOOGLE.png" alt="Google Cybersecurity Professional Certificate" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                    <img src="images/GOOGLE.png" alt="Google Cybersecurity Professional Certificate"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                 </div>
                 <h3 class="cert-name">Google Cybersecurity Professional Certificate V2</h3>
                 <div class="cert-issuer">Coursera</div>
                 <div class="cert-date">Issued Jun 7, 2024 -- No expiration date</div>
-                <a href="https://www.credly.com/earner/earned/badge/23f09042-b93d-4d26-aa4f-4e040aeaea9e" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+                <a href="https://www.credly.com/earner/earned/badge/23f09042-b93d-4d26-aa4f-4e040aeaea9e"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
             </div>
         </div>
     </section>
@@ -352,4 +404,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
