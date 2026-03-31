@@ -409,12 +409,13 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScrolling();
     initImageModal();
     initEnhancedBackground();
-    initNeuralNetwork();
+    // initNeuralNetwork(); // Neural network removed
 });
 
 // ============================================
-// Navigation - Mobile Menu Toggle
+// Navigation Functions
 // ============================================
+
 function initNavigation() {
     const navToggle = document.getElementById('nav-toggle');
     const navLinks = document.getElementById('nav-links');
@@ -429,8 +430,8 @@ function initNavigation() {
     // Close mobile menu when clicking on a link
     navLinksItems.forEach(link => {
         link.addEventListener('click', function() {
-            navToggle.classList.remove('active');
             navLinks.classList.remove('open');
+            navToggle.classList.remove('active');
         });
     });
 
@@ -552,10 +553,22 @@ function initTypingAnimation() {
     let charIndex = 0;
     let isTyping = true;
     
+    // Create a span wrapper to prevent layout shifts
+    const typingContainer = document.createElement('span');
+    typingContainer.style.display = 'inline-block';
+    typingContainer.style.height = '1.5em';
+    typingContainer.style.lineHeight = '1.5';
+    typingContainer.style.overflow = 'hidden';
+    typingContainer.style.verticalAlign = 'bottom';
+    
+    // Clear greeting and add the container
+    greeting.innerHTML = '';
+    greeting.appendChild(typingContainer);
+    
     function typeChar() {
         if (isTyping) {
             if (charIndex < originalText.length) {
-                greeting.textContent += originalText.charAt(charIndex);
+                typingContainer.textContent += originalText.charAt(charIndex);
                 charIndex++;
                 setTimeout(typeChar, 50);
             } else {
@@ -569,7 +582,7 @@ function initTypingAnimation() {
     function deleteChar() {
         if (!isTyping) {
             if (charIndex > 0) {
-                greeting.textContent = originalText.substring(0, charIndex - 1);
+                typingContainer.textContent = originalText.substring(0, charIndex - 1);
                 charIndex--;
                 setTimeout(deleteChar, 30); // Faster deletion
             } else {
