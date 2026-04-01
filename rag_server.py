@@ -10,6 +10,12 @@ import re
 from typing import List, Dict, Any
 import os
 
+try:
+    from groq import Groq
+    GROQ_AVAILABLE = True
+except ImportError:
+    GROQ_AVAILABLE = False
+
 app = FastAPI(title="Portfolio RAG API")
 
 # Enable CORS
@@ -77,6 +83,36 @@ class RAGService:
         # Collapse 3+ consecutive newlines to 2
         text = re.sub(r'\n{3,}', '\n\n', text)
         return text.strip()
+
+    def generate_response_with_groq(self, query: str, context: str) -> str:
+        """Generate response using Groq API — free-tier Llama (production LLM)."""
+        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+        prompt = f"""You are an assistant answering questions about Youssif Ashmawy's portfolio.
+
+Rules:
+1. Answer ONLY using information explicitly present in the context below. Never invent or infer details not stated.
+2. If the context does not contain the answer, respond with exactly: "I don't have an answer to this question. I'll be happy to help you know more about his experience, projects or skills."
+3. Do NOT add category titles or headings like "Work Experience", "Projects", "Technical Skills", or similar. Jump straight into the content.
+4. Scan ALL context chunks and include EVERY item found — do not stop early.
+5. Formatting rules by content type:
+   - Experience: "Company Name | Date Range" on one line, "Job Title, Location" on the next line, then bullet points for responsibilities. Blank line between jobs.
+   - Projects: "Project Name | Technologies" on one line, then bullet points. Blank line between projects.
+   - Skills: List each subcategory (e.g. "Programming Languages :") on its own line followed by bullet points. Include ALL subcategories present in the context. Blank line between subcategories.
+
+Context:
+{context}
+
+Question: {query}
+
+Answer:"""
+
+        completion = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            max_tokens=1024,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return self.format_response(completion.choices[0].message.content)
 
     def generate_response_with_ollama(self, query: str, context: str, model: str = "llama3.2") -> str:
         """Generate response using local Ollama model."""
@@ -198,8 +234,10 @@ async def chat(request: ChatRequest):
         # "CI/CD" (last DevOps item) gets merged with "Technologies :" (next subcategory header)
         context = re.sub(r'\bCI/CD\s+(Technologies\s*:)', r'CI/CD\nTechnologies :', context)
         
-        # Generate response
-        if rag_service.check_ollama_available():
+        # Generate response — priority: Groq (free Llama) → Ollama → keyword fallback
+        if GROQ_AVAILABLE and os.getenv("GROQ_API_KEY"):
+            response = rag_service.generate_response_with_groq(request.message, context)
+        elif rag_service.check_ollama_available():
             response = rag_service.generate_response_with_ollama(
                 request.message, context, request.model
             )

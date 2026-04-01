@@ -509,8 +509,9 @@ class ChatInterface {
             // When running locally, use port 8000 for API
             this.apiUrl = window.location.protocol + '//' + window.location.hostname + ':8000';
         } else {
-            // In production, use same host but different path or port as needed
-            this.apiUrl = window.location.protocol + '//' + window.location.hostname + ':8000';
+            // In production, the CI/CD pipeline replaces __BACKEND_URL__ with
+            // the real Render backend URL via the BACKEND_URL GitHub secret.
+            this.apiUrl = '__BACKEND_URL__';
         }
         
         this.isTyping = false;

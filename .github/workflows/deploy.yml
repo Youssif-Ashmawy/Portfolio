@@ -1,0 +1,58 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+# Required for GitHub Pages deployment
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  # ─── Frontend → GitHub Pages ───────────────────────────────────────────────
+  deploy-frontend:
+    name: Deploy Frontend to GitHub Pages
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare frontend files
+        run: |
+          mkdir -p dist
+          cp index.html styles.css script.js dist/
+          cp -r images dist/
+
+      - name: Inject backend URL
+        # Replace the __BACKEND_URL__ placeholder with the real Render URL.
+        # Set BACKEND_URL in: GitHub repo → Settings → Secrets and variables → Actions
+        run: |
+          sed -i "s|__BACKEND_URL__|${{ secrets.BACKEND_URL }}|g" dist/script.js
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+          # Keeps deployment history clean
+          force_orphan: true
+
+  # ─── Backend → Trigger Render deploy ───────────────────────────────────────
+  deploy-backend:
+    name: Trigger Render Backend Deploy
+    runs-on: ubuntu-latest
+    # Only deploy backend if frontend also succeeded
+    needs: deploy-frontend
+
+    steps:
+      - name: Trigger Render deploy hook
+        # Set RENDER_DEPLOY_HOOK_URL in: GitHub repo → Settings → Secrets and variables → Actions
+        # Get this URL from: Render dashboard → your service → Settings → Deploy Hook
+        # Also set GROQ_API_KEY as an env var in Render dashboard (free at console.groq.com)
+        run: |
+          curl -s --fail "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" \
+            -X POST \
+            -H "Content-Type: application/json" || \
+          echo "⚠️  No Render deploy hook configured — skipping backend deploy."

@@ -1,0 +1,48 @@
+# Version control
+.git
+.gitignore
+.github
+
+# Frontend (not needed in the backend container)
+index.html
+styles.css
+script.js
+images/
+
+# Docs
+*.md
+DATA_SOURCES.md
+RAG_README.md
+TESTING_GUIDE.md
+
+# Large PDFs not used by the RAG system
+COMP4905_Report.pdf
+
+# Shell scripts (runtime tooling, not needed in container)
+*.sh
+
+# Logs
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# ChromaDB — built fresh during docker build from the PDF
+chroma_db/
+chroma_db_backup_*/
+
+# Local dev environments
+.venv/
+venv/
+env/
+
+# macOS
+.DS_Store
+
+# Misc
+*.tmp
+*.temp
+certs_info.txt
+data.txt
