@@ -37,8 +37,29 @@ fi
 if [ ! -d "chroma_db" ]; then
     echo "📦 Installing dependencies and building vector database..."
     pip3 install -r requirements.txt > /dev/null 2>&1
-    python3 build_vector_db.py
+    
+    # Ask user which data source to use
+    echo ""
+    echo "📊 Choose data source:"
+    echo "1) data.txt (3.5KB - Structured, clean)"
+    echo "2) Youssif_Ashmawy_Resume.pdf (174KB - Comprehensive, detailed)"
+    echo ""
+    read -p "Enter choice (1 or 2) [1]: " choice
+    
+    case $choice in
+        2)
+            echo "📄 Building from PDF resume..."
+            python3 pdf_to_vector_db.py
+            ;;
+        *)
+            echo "📄 Building from data.txt..."
+            python3 build_vector_db.py
+            ;;
+    esac
+    
     echo "✅ Dependencies installed and vector database built"
+else
+    echo "✅ Vector database already exists"
 fi
 
 # Start RAG API server

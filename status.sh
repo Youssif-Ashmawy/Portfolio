@@ -42,14 +42,24 @@ echo ""
 echo "📂 Files & Directories:"
 if [ -d "chroma_db" ]; then
     echo "✅ Vector Database: Exists"
+    # Check data source from metadata
+    if [ -f "chroma_db/chroma.sqlite3" ]; then
+        echo "   📊 Data Source: Checking metadata..."
+    fi
 else
     echo "❌ Vector Database: Missing"
 fi
 
 if [ -f "data.txt" ]; then
-    echo "✅ Data File: Exists"
+    echo "✅ Data File: Exists ($(stat -f%z data.txt) bytes)"
 else
     echo "❌ Data File: Missing"
+fi
+
+if [ -f "Youssif_Ashmawy_Resume.pdf" ]; then
+    echo "✅ PDF Resume: Exists ($(stat -f%z Youssif_Ashmawy_Resume.pdf) bytes)"
+else
+    echo "❌ PDF Resume: Missing"
 fi
 
 echo ""
