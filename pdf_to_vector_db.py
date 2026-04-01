@@ -106,7 +106,7 @@ class PDFDataExtractor:
         
         return documents
     
-    def chunk_documents(self, documents: List[Dict[str, str]], chunk_size: int = 300) -> List[str]:
+    def chunk_documents(self, documents: List[Dict[str, str]], chunk_size: int = 600) -> List[str]:
         """Split documents into smaller chunks for better retrieval."""
         chunks = []
         

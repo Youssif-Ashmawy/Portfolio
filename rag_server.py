@@ -6,6 +6,7 @@ from sentence_transformers import SentenceTransformer
 import ollama
 import requests
 import json
+import re
 from typing import List, Dict, Any
 import os
 
@@ -47,19 +48,49 @@ class RAGService:
     def get_relevant_documents(self, query: str, n_results: int = 3) -> List[str]:
         """Retrieve relevant documents from the vector database."""
         try:
+            # Fetch many candidates to account for Resume Overview chunks crowding out section chunks
             results = self.collection.query(
                 query_texts=[query],
-                n_results=n_results
+                n_results=n_results * 5
             )
-            return results['documents'][0] if results['documents'] else []
+            docs = results['documents'][0] if results['documents'] else []
+            # Prefer section-specific chunks over the generic Resume Overview duplicates
+            section_docs = [d for d in docs if not d.startswith("Resume Overview:")]
+            overview_docs = [d for d in docs if d.startswith("Resume Overview:")]
+            combined = section_docs + overview_docs
+            return combined[:n_results * 2]
         except Exception as e:
             print(f"Error retrieving documents: {e}")
             return []
     
+    def format_response(self, text: str) -> str:
+        """Ensure bullet points and section headers are separated by newlines."""
+        # Fix PDF artifact: "Technologies :" glued to previous item (e.g. "CI/CD Technologies :")
+        text = re.sub(r'(?<!\n)(Technologies\s*:)', r'\n\n\1', text)
+        # Only treat • as a bullet (avoids mangling hyphens inside words like "dependency-aware")
+        # Add newline before • if not already preceded by one
+        text = re.sub(r'(?<!\n)(•)', r'\n\1', text)
+        # Collapse multiple blank lines between bullets to a single newline
+        text = re.sub(r'\n{2,}(•)', r'\n\1', text)
+        # Add a blank line before a section header (non-bullet line that follows a bullet line)
+        text = re.sub(r'(\n•[^\n]+)\n([^•\n])', r'\1\n\n\2', text)
+        # Collapse 3+ consecutive newlines to 2
+        text = re.sub(r'\n{3,}', '\n\n', text)
+        return text.strip()
+
     def generate_response_with_ollama(self, query: str, context: str, model: str = "llama3.2") -> str:
         """Generate response using local Ollama model."""
-        prompt = f"""You are a helpful assistant answering questions about Youssif Ashmawy's portfolio. 
-Use the following context to answer the question. If the context doesn't contain the answer, say you don't have that information.
+        prompt = f"""You are an assistant answering questions about Youssif Ashmawy's portfolio.
+
+Rules:
+1. Answer ONLY using information explicitly present in the context below. Never invent or infer details not stated.
+2. If the context does not contain the answer, respond with exactly: "I don't have an answer to this question. I'll be happy to help you know more about his experience, projects or skills."
+3. Do NOT add category titles or headings like "Work Experience", "Projects", "Technical Skills", or similar. Jump straight into the content.
+4. Scan ALL context chunks and include EVERY item found — do not stop early.
+5. Formatting rules by content type:
+   - Experience: "Company Name | Date Range" on one line, "Job Title, Location" on the next line, then bullet points for responsibilities. Blank line between jobs.
+   - Projects: "Project Name | Technologies" on one line, then bullet points. Blank line between projects.
+   - Skills: List each subcategory (e.g. "Programming Languages :") on its own line followed by bullet points. Include ALL subcategories present in the context. Blank line between subcategories.
 
 Context:
 {context}
@@ -76,7 +107,7 @@ Answer:"""
             # Try to use the ollama Python library
             try:
                 response = ollama.generate(model=model, prompt=prompt)
-                return response['response']
+                return self.format_response(response['response'])
             except:
                 # Fallback to direct API call
                 response = requests.post(
@@ -89,7 +120,7 @@ Answer:"""
                     timeout=30
                 )
                 if response.status_code == 200:
-                    return response.json().get('response', 'Sorry, I could not generate a response.')
+                    return self.format_response(response.json().get('response', 'Sorry, I could not generate a response.'))
                 else:
                     return f"Error from Ollama: {response.status_code}"
                     
@@ -129,7 +160,7 @@ Answer:"""
             return "You can contact Youssif at ashmawyyoussif@gmail.com or +966-543-241-340. His GitHub is github.com/youssif-ashmawy and LinkedIn is linkedin.com/in/youssif-ashmawy."
         
         else:
-            return "I can help you with information about Youssif's experience, education, projects, skills, or contact details. What would you like to know more about?"
+            return "I don't have an answer to this question. I'll be happy to help you know more about his experience, projects or skills."
 
 # Initialize RAG service
 rag_service = RAGService()
@@ -153,16 +184,19 @@ async def chat(request: ChatRequest):
     """Chat endpoint with RAG functionality."""
     try:
         # Retrieve relevant documents
-        relevant_docs = rag_service.get_relevant_documents(request.message, n_results=3)
+        relevant_docs = rag_service.get_relevant_documents(request.message, n_results=5)
         
         if not relevant_docs:
             return ChatResponse(
-                response="I couldn't find relevant information in the portfolio. Please try asking about Youssif's experience, education, projects, or skills.",
+                response="I don't have an answer to this question. I'll be happy to help you know more about his experience, projects or skills.",
                 sources=[]
             )
         
-        # Combine context
-        context = "\n\n".join(relevant_docs)
+        # Combine context — reverse so highest-similarity chunks appear last (recency bias)
+        context = "\n\n".join(reversed(relevant_docs))
+        # Fix PDF extraction artifact before sending to the model:
+        # "CI/CD" (last DevOps item) gets merged with "Technologies :" (next subcategory header)
+        context = re.sub(r'\bCI/CD\s+(Technologies\s*:)', r'CI/CD\nTechnologies :', context)
         
         # Generate response
         if rag_service.check_ollama_available():

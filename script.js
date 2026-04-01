@@ -597,7 +597,15 @@ class ChatInterface {
         
         const messageContent = document.createElement('div');
         messageContent.className = 'message-content';
-        messageContent.textContent = content;
+        if (isUser) {
+            messageContent.textContent = content;
+        } else {
+            messageContent.innerHTML = content
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/\n/g, '<br>');
+        }
         
         messageDiv.appendChild(avatar);
         messageDiv.appendChild(messageContent);
