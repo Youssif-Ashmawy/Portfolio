@@ -29,8 +29,7 @@ __pycache__/
 *.pyc
 *.pyo
 
-# ChromaDB — built fresh during docker build from the PDF
-chroma_db/
+# ChromaDB backups are not needed in the image
 chroma_db_backup_*/
 
 # Local dev environments
