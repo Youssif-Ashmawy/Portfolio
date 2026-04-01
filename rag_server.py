@@ -3,7 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import chromadb
 from sentence_transformers import SentenceTransformer
-import ollama
+try:
+    import ollama
+    OLLAMA_SDK_AVAILABLE = True
+except ImportError:
+    OLLAMA_SDK_AVAILABLE = False
 import requests
 import re
 from typing import List
@@ -141,8 +145,10 @@ Answer:"""
             
             # Try to use the ollama Python library
             try:
-                response = ollama.generate(model=model, prompt=prompt)
-                return self.format_response(response['response'])
+                if OLLAMA_SDK_AVAILABLE:
+                    response = ollama.generate(model=model, prompt=prompt)
+                    return self.format_response(response['response'])
+                raise ImportError("ollama SDK not installed")
             except Exception:
                 # Fallback to direct API call
                 response = requests.post(
