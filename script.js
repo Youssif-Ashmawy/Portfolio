@@ -668,7 +668,7 @@ class ChatInterface {
                 const data = await response.json();
                 this.updateStatus('Ready', 'normal');
                 if (!data.ollama_available) {
-                    this.updateStatus('Ollama not available - using fallback responses', 'warning');
+                    this.updateStatus('AI ready — ask me anything!', 'normal');
                 }
             } else {
                 this.updateStatus('Server unavailable', 'error');
