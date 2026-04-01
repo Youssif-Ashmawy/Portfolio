@@ -1,0 +1,17 @@
+name: Keep Render Alive
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"   # every 10 minutes
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping Render backend
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" -X POST ${{ secrets.BACKEND_URL }}/chat \
+          -H "Content-Type: application/json" \
+          -d '{"message":"What skills does Youssif have?"}'
