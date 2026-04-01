@@ -487,6 +487,194 @@ function debounce(func, wait) {
 }
 
 // ============================================
+// Chat Interface Functionality
+// ============================================
+
+class ChatInterface {
+    constructor() {
+        this.chatContainer = document.getElementById('chatContainer');
+        this.chatBody = document.getElementById('chatBody');
+        this.chatMessages = document.getElementById('chatMessages');
+        this.chatInput = document.getElementById('chatInput');
+        this.chatSend = document.getElementById('chatSend');
+        this.chatToggle = document.getElementById('chatToggle');
+        this.toggleIcon = document.getElementById('toggleIcon');
+        this.chatStatus = document.getElementById('chatStatus');
+        this.statusText = document.getElementById('statusText');
+        
+        // Determine API URL based on current environment
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            // When running locally, use port 8000 for API
+            this.apiUrl = window.location.protocol + '//' + window.location.hostname + ':8000';
+        } else {
+            // In production, use same host but different path or port as needed
+            this.apiUrl = window.location.protocol + '//' + window.location.hostname + ':8000';
+        }
+        this.isTyping = false;
+        this.isCollapsed = false;
+        
+        this.init();
+    }
+    
+    init() {
+        if (!this.chatContainer) return;
+        
+        // Event listeners
+        this.chatSend.addEventListener('click', () => this.sendMessage());
+        this.chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                this.sendMessage();
+            }
+        });
+        
+        this.chatToggle.addEventListener('click', () => this.toggleChat());
+        
+        // Check server status on load
+        this.checkServerStatus();
+        
+        // Auto-resize input
+        this.chatInput.addEventListener('input', () => {
+            this.chatInput.style.height = 'auto';
+            this.chatInput.style.height = Math.min(this.chatInput.scrollHeight, 100) + 'px';
+        });
+    }
+    
+    toggleChat() {
+        this.isCollapsed = !this.isCollapsed;
+        
+        if (this.isCollapsed) {
+            this.chatBody.classList.add('collapsed');
+            this.toggleIcon.textContent = '+';
+            this.chatContainer.style.height = 'auto';
+        } else {
+            this.chatBody.classList.remove('collapsed');
+            this.toggleIcon.textContent = '−';
+            this.chatContainer.style.height = '';
+            
+            // Focus input when expanding
+            setTimeout(() => {
+                this.chatInput.focus();
+            }, 300);
+        }
+    }
+    
+    async checkServerStatus() {
+        try {
+            const response = await fetch(`${this.apiUrl}/health`);
+            if (response.ok) {
+                const data = await response.json();
+                this.updateStatus('Ready', 'normal');
+                if (!data.ollama_available) {
+                    this.updateStatus('Ollama not available - using fallback responses', 'warning');
+                }
+            } else {
+                this.updateStatus('Server unavailable', 'error');
+            }
+        } catch (error) {
+            this.updateStatus('Cannot connect to server', 'error');
+        }
+    }
+    
+    updateStatus(text, type = 'normal') {
+        this.statusText.textContent = text;
+        this.chatStatus.className = 'chat-status';
+        
+        if (type === 'typing') {
+            this.chatStatus.classList.add('typing');
+        } else if (type === 'error') {
+            this.chatStatus.classList.add('error');
+        }
+    }
+    
+    addMessage(content, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+        
+        const avatar = document.createElement('div');
+        avatar.className = 'message-avatar';
+        avatar.textContent = isUser ? '👤' : '🤖';
+        
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content';
+        messageContent.textContent = content;
+        
+        messageDiv.appendChild(avatar);
+        messageDiv.appendChild(messageContent);
+        
+        this.chatMessages.appendChild(messageDiv);
+        this.scrollToBottom();
+        
+        return messageDiv;
+    }
+    
+    scrollToBottom() {
+        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+    }
+    
+    async sendMessage() {
+        const message = this.chatInput.value.trim();
+        if (!message || this.isTyping) return;
+        
+        // Add user message
+        this.addMessage(message, true);
+        
+        // Clear input
+        this.chatInput.value = '';
+        this.chatInput.style.height = 'auto';
+        
+        // Show typing status
+        this.isTyping = true;
+        this.updateStatus('Thinking...', 'typing');
+        this.chatSend.disabled = true;
+        this.chatInput.disabled = true;
+        
+        try {
+            const response = await fetch(`${this.apiUrl}/chat`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: message,
+                    model: 'llama3.2'
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            // Add bot response
+            this.addMessage(data.response);
+            
+            // Update status
+            this.updateStatus('Ready', 'normal');
+            
+        } catch (error) {
+            console.error('Error sending message:', error);
+            
+            // Add error message
+            this.addMessage('Sorry, I encountered an error. Please make sure the server is running on localhost:8000.');
+            
+            // Update status
+            this.updateStatus('Error - Check server connection', 'error');
+        } finally {
+            this.isTyping = false;
+            this.chatSend.disabled = false;
+            this.chatInput.disabled = false;
+            this.chatInput.focus();
+        }
+    }
+}
+
+function initChatInterface() {
+    new ChatInterface();
+}
+
+// ============================================
 // Initialize all features with performance considerations
 // ============================================
 function initializeApp() {
@@ -497,21 +685,15 @@ function initializeApp() {
     initSmoothScrolling();
     
     // Enhanced features (optional)
-    if (window.innerWidth > 768) {
-        initParallaxEffect();
-        initTypingAnimation();
-    }
-    
+    initEnhancedBackground();
+    initParallaxEffect();
+    initTypingAnimation();
     initProjectCardEffects();
     initTimelineAnimation();
     initFormValidation();
     
-    // Performance optimization for scroll events
-    const optimizedScroll = debounce(function() {
-        // Any scroll-based calculations that need debouncing
-    }, 16); // ~60fps
-    
-    window.addEventListener('scroll', optimizedScroll);
+    // Chat interface
+    initChatInterface();
 }
 
 // ============================================

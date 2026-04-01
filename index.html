@@ -62,6 +62,45 @@
             </div>
         </div>
         
+        <!-- Chat Interface -->
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <span class="chat-icon">💬</span>
+                    Ask about my portfolio
+                </div>
+                <button class="chat-toggle" id="chatToggle">
+                    <span id="toggleIcon">−</span>
+                </button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        <div class="message-content">
+                            Hi! I'm here to help you learn about Youssif's experience, projects, and skills. What would you like to know?
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input 
+                        type="text" 
+                        id="chatInput" 
+                        placeholder="Ask about my experience, projects, skills..." 
+                        class="chat-input"
+                        maxlength="500"
+                    />
+                    <button id="chatSend" class="chat-send-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="chat-status" id="chatStatus">
+                    <span id="statusText">Ready</span>
+                </div>
+            </div>
+        </div>
+        
         <div class="scroll-indicator">
             <div class="mouse"></div>
             <span>Scroll</span>
