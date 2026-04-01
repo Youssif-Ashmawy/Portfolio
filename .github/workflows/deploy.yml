@@ -24,6 +24,7 @@ jobs:
           mkdir -p dist
           cp index.html styles.css script.js dist/
           cp -r images dist/
+          cp COMP4905_Report.pdf dist/
 
       - name: Inject backend URL
         # Replace the __BACKEND_URL__ placeholder with the real Render URL.
