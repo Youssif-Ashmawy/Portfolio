@@ -1,172 +1,114 @@
-# Youssif Ashmawy - Portfolio Website
+# Youssif Ashmawy — Portfolio Website
 
-A premium, modern portfolio website showcasing educational journey, work experience, projects, and certifications.
+A modern, dark-themed personal portfolio showcasing my experience, projects, certifications, and an AI-powered chatbot built with a custom RAG pipeline.
 
-## 🚀 Features
+🌐 **Live site**: [youssif-ashmawy.github.io/Portfolio](https://youssif-ashmawy.github.io/Portfolio)
 
-- **Modern Dark Theme**: Premium dark mode design with vibrant gradient accents and glassmorphism effects
-- **Fully Responsive**: Optimized for desktop, tablet, and mobile devices
-- **Smooth Animations**: Scroll-reveal animations, hover effects, and micro-interactions
-- **Interactive Timeline**: Visual representation of career progression and educational background
-- **Project Showcase**: Grid layout with hover overlays and technology tags
-- **Certification Badges**: Professional display of certifications and achievements
-- **Smooth Navigation**: Sticky navbar with mobile-friendly hamburger menu
-- **Performance Optimized**: Efficient animations and lazy loading
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **HTML5 / CSS3 / Vanilla JavaScript** — no frameworks, built from scratch
+- **Google Fonts** — Inter and JetBrains Mono
+- **Intersection Observer API** — scroll-triggered reveal animations
+
+### AI Chatbot (RAG Pipeline)
+- **FastAPI** — backend API server
+- **ChromaDB** — vector database for semantic search
+- **sentence-transformers** (`all-MiniLM-L6-v2`) — text embeddings
+- **Groq API** — free-tier Llama 3.3 70B for production inference
+- **Ollama** — local inference during development
+
+### Infrastructure & CI/CD
+- **GitHub Pages** — frontend hosting
+- **Render** — backend Docker container hosting
+- **GitHub Actions** — CI (ruff linting) + CD (auto-deploy on push to `main`)
+- **Docker** — containerized backend with CPU-only PyTorch
+
+---
 
 ## 📁 Project Structure
 
 ```
 Portfolio/
-├── index.html          # Main HTML structure
-├── styles.css          # Complete design system and styling
-├── script.js           # Interactive features and animations
-├── README.md           # Project documentation
-└── implementation_plan.md.resolved  # Original implementation plan
+├── index.html              # Main HTML structure
+├── styles.css              # Design system and styling
+├── script.js               # Animations, interactions, chat UI
+├── rag_server.py           # FastAPI RAG backend
+├── pdf_to_vector_db.py     # Builds ChromaDB from resume PDF
+├── build_vector_db.py      # Builds ChromaDB from text file
+├── Dockerfile              # Backend container definition
+├── requirements.txt        # Python dependencies
+├── .github/workflows/      # CI/CD pipelines
+│   ├── ci.yml              # Lint on every push/PR
+│   └── deploy.yml          # Deploy frontend + trigger backend
+└── images/                 # Project and certification images
 ```
 
-## 🛠️ Technologies Used
+---
 
-- **HTML5**: Semantic markup with accessibility in mind
-- **CSS3**: Modern features including Grid, Flexbox, CSS Variables, and animations
-- **Vanilla JavaScript**: No frameworks, pure JS for maximum performance
-- **Google Fonts**: Inter and JetBrains Mono for typography
-- **Intersection Observer API**: For scroll-triggered animations
+## 🤖 How the RAG Chatbot Works
 
-## 🎨 Design System
+1. Resume PDF is parsed and chunked into sections (Experience, Projects, Skills, etc.)
+2. Each chunk is embedded using `all-MiniLM-L6-v2` and stored in ChromaDB
+3. On a user query, the top semantically similar chunks are retrieved
+4. Retrieved context is passed to **Groq's Llama 3.3 70B** to generate a grounded answer
+5. Falls back to Ollama (local dev) or keyword matching if neither is available
 
-### Color Palette
-- **Primary**: Dark background (#0a0a0f, #111119)
-- **Accent**: Violet (#6c5ce7), Lavender (#a29bfe), Teal (#00cec9), Pink (#fd79a8)
-- **Text**: Primary (#e8e8ed), Secondary (#8b8b9e), Muted (#55556a)
+---
 
-### Typography
-- **Sans-serif**: Inter (headings, body text)
-- **Monospace**: JetBrains Mono (code, dates, labels)
+## 🚀 Running Locally
 
-### Animations
-- **Easing**: Cubic-bezier for smooth, professional transitions
-- **Duration**: Fast (0.2s), Medium (0.45s), Slow (0.7s)
-- **Effects**: Fade-in, slide-up, scale, parallax
+**Quick start (all-in-one):**
+```bash
+./quick_start.sh
+```
+This will:
+1. Start Ollama if not already running
+2. Install dependencies and build the ChromaDB vector DB (first run only — prompts you to choose between `data.txt` or the PDF resume)
+3. Launch the RAG API server on `http://localhost:8000`
+4. Launch the frontend on `http://localhost:8080`
 
-## 📱 Sections Overview
+**Stop everything:**
+```bash
+./quick_kill.sh
+```
+Gracefully stops all three servers, force-kills any stragglers, frees ports 8000, 8080, and 11434, and removes log files.
 
-### Hero Section
-- Animated greeting and name display
-- Professional tagline and call-to-action buttons
-- Scroll indicator with animated mouse icon
-
-### Experience Timeline
-- Vertical timeline with interactive dots
-- Company cards with role descriptions and technology tags
-- Hover effects with gradient overlays
-
-### Education Grid
-- Responsive card layout for academic achievements
-- Icon-based visual hierarchy
-- School information and descriptions
-
-### Projects Showcase
-- Interactive project cards with image previews
-- Hover overlays with live demo and GitHub links
-- Technology stack tags for each project
-
-### Certifications
-- Badge-style cards for professional certifications
-- Issuer information and dates
-- Hover effects with radial gradients
-
-### Footer
-- Social media and contact links
-- Professional closing statement
-
-## 🚀 Getting Started
-
-1. **Clone or download** the project files
-2. **Open `index.html`** in your preferred browser
-3. **Or run locally** with a web server:
-   ```bash
-   # Using Python
-   python3 -m http.server 8000
-   
-   # Using Node.js
-   npx serve .
-   
-   # Using PHP
-   php -S localhost:8000
-   ```
-4. **Visit** `http://localhost:8000` to view the portfolio
-
-## 🎯 Customization Guide
-
-### Personal Information
-Update the following sections in `index.html`:
-- **Hero Section**: Name, tagline, and description
-- **Experience**: Add/remove timeline items with your actual work history
-- **Education**: Update degrees, schools, and years
-- **Projects**: Replace placeholder projects with your actual work
-- **Certifications**: Add your professional certifications
-- **Footer**: Update social media links and contact information
-
-### Styling Customization
-Modify `styles.css` variables:
-```css
-:root {
-  --accent-1: #your-color;   /* Primary accent */
-  --accent-2: #your-color;   /* Secondary accent */
-  --gradient-hero: linear-gradient(...); /* Hero gradient */
-}
+**Manual setup:**
+```bash
+pip install -r requirements.txt
+python3 pdf_to_vector_db.py   # build the vector DB once
+python3 rag_server.py         # API on http://localhost:8000
+python3 -m http.server 8080   # frontend on http://localhost:8080
 ```
 
-### Content Updates
-- Replace placeholder images with actual project screenshots
-- Update project descriptions and technologies
-- Modify timeline dates and company information
-- Add real certification details
+---
+
+## 📱 Sections
+
+- **Hero** — animated intro with name, tagline, and CTA
+- **Experience** — interactive vertical timeline of work history
+- **Education** — academic background at Carleton University
+- **Projects** — showcase with GitHub links and tech tags
+- **Certifications** — Nutanix, Google, Red Hat
+- **AI Chat** — RAG-powered chatbot answering questions about me
+
+---
 
 ## 🌐 Browser Compatibility
 
-- ✅ Chrome 60+
-- ✅ Firefox 55+
-- ✅ Safari 12+
-- ✅ Edge 79+
-- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
+- Chrome 60+, Firefox 55+, Safari 12+, Edge 79+, iOS Safari, Chrome Mobile
 
-## 📊 Performance Metrics
-
-- **Lighthouse Score**: 95+ (Performance, Accessibility, Best Practices, SEO)
-- **Load Time**: <2 seconds on 3G connection
-- **Animation FPS**: 60fps smooth scrolling
-- **Mobile Optimized**: Touch-friendly interactions
-
-## 🔧 Advanced Features
-
-### Scroll Animations
-- Intersection Observer for performance
-- Staggered reveal animations
-- Parallax background effects
-
-### Responsive Design
-- Mobile-first approach
-- Breakpoints: 768px (tablet), 480px (mobile)
-- Flexible grid layouts
-- Touch-optimized interactions
-
-### Accessibility
-- Semantic HTML5 structure
-- ARIA labels where needed
-- Keyboard navigation support
-- High contrast ratios
+---
 
 ## 📝 License
 
 Copyright 2026 Youssif Ashmawy
 
-This project is open source and available under the [Apache License 2.0](LICENSE).
-
-## 🤝 Contributing
-
-Feel free to use this as a template for your own portfolio. If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+This project is available under the [Apache License 2.0](LICENSE).
 
 ---
 
-**Built with passion and lots of ☕ by Youssif Ashmawy**
+**Built by Youssif Ashmawy**
