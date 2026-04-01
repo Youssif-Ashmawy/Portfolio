@@ -497,10 +497,12 @@ class ChatInterface {
         this.chatMessages = document.getElementById('chatMessages');
         this.chatInput = document.getElementById('chatInput');
         this.chatSend = document.getElementById('chatSend');
-        this.chatToggle = document.getElementById('chatToggle');
-        this.toggleIcon = document.getElementById('toggleIcon');
+        this.chatToggleIcon = document.getElementById('chatToggleIcon');
+        this.chatClose = document.getElementById('chatClose');
+        this.chatNotification = document.getElementById('chatNotification');
         this.chatStatus = document.getElementById('chatStatus');
         this.statusText = document.getElementById('statusText');
+        this.resizeHandle = document.getElementById('resizeHandle');
         
         // Determine API URL based on current environment
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
@@ -510,8 +512,12 @@ class ChatInterface {
             // In production, use same host but different path or port as needed
             this.apiUrl = window.location.protocol + '//' + window.location.hostname + ':8000';
         }
+        
         this.isTyping = false;
-        this.isCollapsed = false;
+        this.isOpen = false;
+        this.isDragging = false;
+        this.isResizing = false;
+        this.dragOffset = { x: 0, y: 0 };
         
         this.init();
     }
@@ -528,7 +534,17 @@ class ChatInterface {
             }
         });
         
-        this.chatToggle.addEventListener('click', () => this.toggleChat());
+        // Toggle icon click
+        this.chatToggleIcon.addEventListener('click', () => this.toggleChat());
+        
+        // Close button
+        this.chatClose.addEventListener('click', () => this.closeChat());
+        
+        // Drag functionality
+        this.initDragFunctionality();
+        
+        // Resize functionality
+        this.initResizeFunctionality();
         
         // Check server status on load
         this.checkServerStatus();
@@ -541,22 +557,107 @@ class ChatInterface {
     }
     
     toggleChat() {
-        this.isCollapsed = !this.isCollapsed;
-        
-        if (this.isCollapsed) {
-            this.chatBody.classList.add('collapsed');
-            this.toggleIcon.textContent = '+';
-            this.chatContainer.style.height = 'auto';
+        if (this.isOpen) {
+            this.closeChat();
         } else {
-            this.chatBody.classList.remove('collapsed');
-            this.toggleIcon.textContent = '−';
-            this.chatContainer.style.height = '';
-            
-            // Focus input when expanding
-            setTimeout(() => {
-                this.chatInput.focus();
-            }, 300);
+            this.openChat();
         }
+    }
+    
+    openChat() {
+        this.chatContainer.style.display = 'flex';
+        this.isOpen = true;
+        
+        // Hide notification dot
+        this.chatNotification.classList.remove('show');
+        
+        // Focus input when opening
+        setTimeout(() => {
+            this.chatInput.focus();
+        }, 300);
+    }
+    
+    closeChat() {
+        this.chatContainer.style.display = 'none';
+        this.isOpen = false;
+    }
+    
+    initDragFunctionality() {
+        const chatHeader = this.chatContainer.querySelector('.chat-header');
+        
+        chatHeader.addEventListener('mousedown', (e) => {
+            if (e.target.closest('.chat-controls') || e.target === this.resizeHandle) return;
+            
+            this.isDragging = true;
+            const rect = this.chatContainer.getBoundingClientRect();
+            this.dragOffset.x = e.clientX - rect.left;
+            this.dragOffset.y = e.clientY - rect.top;
+            
+            document.addEventListener('mousemove', this.handleDrag);
+            document.addEventListener('mouseup', this.stopDrag);
+            
+            e.preventDefault();
+        });
+    }
+    
+    handleDrag = (e) => {
+        if (!this.isDragging) return;
+        
+        const newX = e.clientX - this.dragOffset.x;
+        const newY = e.clientY - this.dragOffset.y;
+        
+        // Boundary constraints
+        const maxX = window.innerWidth - this.chatContainer.offsetWidth;
+        const maxY = window.innerHeight - this.chatContainer.offsetHeight;
+        
+        const constrainedX = Math.max(0, Math.min(newX, maxX));
+        const constrainedY = Math.max(0, Math.min(newY, maxY));
+        
+        this.chatContainer.style.right = 'auto';
+        this.chatContainer.style.top = constrainedY + 'px';
+        this.chatContainer.style.left = constrainedX + 'px';
+    };
+    
+    stopDrag = () => {
+        this.isDragging = false;
+        document.removeEventListener('mousemove', this.handleDrag);
+        document.removeEventListener('mouseup', this.stopDrag);
+    };
+    
+    initResizeFunctionality() {
+        this.resizeHandle.addEventListener('mousedown', (e) => {
+            this.isResizing = true;
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const startWidth = this.chatContainer.offsetWidth;
+            const startHeight = this.chatContainer.offsetHeight;
+            
+            const handleResize = (e) => {
+                if (!this.isResizing) return;
+                
+                const newWidth = startWidth + (e.clientX - startX);
+                const newHeight = startHeight + (e.clientY - startY);
+                
+                // Apply constraints
+                const constrainedWidth = Math.max(300, Math.min(newWidth, 600));
+                const constrainedHeight = Math.max(400, Math.min(newHeight, 800));
+                
+                this.chatContainer.style.width = constrainedWidth + 'px';
+                this.chatContainer.style.height = constrainedHeight + 'px';
+            };
+            
+            const stopResize = () => {
+                this.isResizing = false;
+                document.removeEventListener('mousemove', handleResize);
+                document.removeEventListener('mouseup', stopResize);
+            };
+            
+            document.addEventListener('mousemove', handleResize);
+            document.addEventListener('mouseup', stopResize);
+            
+            e.preventDefault();
+            e.stopPropagation();
+        });
     }
     
     async checkServerStatus() {
