@@ -14,10 +14,13 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application source and pre-built vector database
+# Copy application source and resume PDF
 COPY rag_server.py pdf_to_vector_db.py build_vector_db.py ./
 COPY Youssif_Ashmawy_Resume.pdf .
-COPY chroma_db/ ./chroma_db/
+
+# Build the vector DB using the exact chromadb version installed above.
+# This guarantees no schema mismatch between the DB and the running code.
+RUN python3 pdf_to_vector_db.py
 
 # Render (and most PaaS providers) inject a $PORT environment variable.
 # Default to 8000 for local docker run.

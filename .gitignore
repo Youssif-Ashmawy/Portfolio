@@ -1,6 +1,7 @@
 .DS_Store
 
 # RAG System Generated Files
+chroma_db/
 chroma_db_backup_*/
 rag_server.log
 web_server.log
