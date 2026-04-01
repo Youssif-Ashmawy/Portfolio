@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install Python dependencies first (layer cached unless requirements change)
 COPY requirements.txt .
+# Install CPU-only PyTorch first to avoid pulling in multi-GB CUDA/NVIDIA packages
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application source and pre-built vector database
