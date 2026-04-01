@@ -159,7 +159,9 @@ Modify `styles.css` variables:
 
 ## 📝 License
 
-This project is open source and available under the [MIT License](LICENSE).
+Copyright 2026 Youssif Ashmawy
+
+This project is open source and available under the [Apache License 2.0](LICENSE).
 
 ## 🤝 Contributing
 
