@@ -5,7 +5,7 @@ ollama==0.1.7
 sentence-transformers==2.2.2
 python-multipart==0.0.6
 pydantic==2.5.0
-numpy>=1.21.0
+numpy>=1.21.0,<2.0
 requests>=2.25.0
 PyPDF2>=3.0.0
 groq>=0.9.0
