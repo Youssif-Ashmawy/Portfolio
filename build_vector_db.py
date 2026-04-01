@@ -22,9 +22,6 @@ class VectorDBBuilder:
         
         documents = []
         
-        # Split content into sections
-        sections = re.split(r'\n(?=[A-Z][a-z])', content)
-        
         current_section = None
         current_content = []
         
@@ -107,9 +104,9 @@ class VectorDBBuilder:
                 name="portfolio_data",
                 metadata={"hnsw:space": "cosine"}
             )
-        except:
+        except Exception:
             pass
-        
+
         print("Storing in ChromaDB...")
         # Add documents to collection
         self.collection.add(

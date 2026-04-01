@@ -39,7 +39,7 @@ class PDFDataExtractor:
         text = re.sub(r'\s+', ' ', text)  # Replace multiple spaces with single space
         text = re.sub(r'\n+', '\n', text)  # Replace multiple newlines with single newline
         
-        print(f"📝 Extracted text preview (first 500 chars):")
+        print("📝 Extracted text preview (first 500 chars):")
         print(text[:500])
         print("...")
         
@@ -153,9 +153,9 @@ class PDFDataExtractor:
                 name="portfolio_data",
                 metadata={"hnsw:space": "cosine"}
             )
-        except:
+        except Exception:
             pass
-        
+
         print("💾 Storing in ChromaDB...")
         # Add documents to collection
         self.collection.add(
@@ -165,8 +165,8 @@ class PDFDataExtractor:
             metadatas=[{"source": f"{os.path.basename(self.pdf_path)}_chunk_{i}"} for i in range(len(chunks))]
         )
         
-        print(f"✅ Successfully built vector database from PDF!")
-        print(f"📍 Database saved to: ./chroma_db")
+        print("✅ Successfully built vector database from PDF!")
+        print("📍 Database saved to: ./chroma_db")
         print(f"📄 Source: {self.pdf_path}")
         
         # Test the database

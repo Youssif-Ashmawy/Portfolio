@@ -5,9 +5,8 @@ import chromadb
 from sentence_transformers import SentenceTransformer
 import ollama
 import requests
-import json
 import re
-from typing import List, Dict, Any
+from typing import List
 import os
 
 try:
@@ -48,7 +47,7 @@ class RAGService:
         try:
             response = requests.get(f"{self.ollama_base_url}/api/tags", timeout=5)
             return response.status_code == 200
-        except:
+        except Exception:
             return False
     
     def get_relevant_documents(self, query: str, n_results: int = 3) -> List[str]:
@@ -144,7 +143,7 @@ Answer:"""
             try:
                 response = ollama.generate(model=model, prompt=prompt)
                 return self.format_response(response['response'])
-            except:
+            except Exception:
                 # Fallback to direct API call
                 response = requests.post(
                     f"{self.ollama_base_url}/api/generate",
