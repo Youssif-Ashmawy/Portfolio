@@ -190,8 +190,9 @@ class PDFDataExtractor:
                 print(f"   {doc[:100]}..." if len(doc) > 100 else f"   {doc}")
 
 def main():
-    pdf_file = "Youssif_Ashmawy_Resume.pdf"
-    
+    import sys
+    pdf_file = sys.argv[1] if len(sys.argv) > 1 else "Youssif_Ashmawy_Resume_2.pdf"
+
     if not os.path.exists(pdf_file):
         print(f"❌ PDF file '{pdf_file}' not found!")
         print("📄 Available files:")
@@ -199,7 +200,7 @@ def main():
             if file.lower().endswith('.pdf'):
                 print(f"   - {file}")
         return
-    
+
     extractor = PDFDataExtractor(pdf_file)
     extractor.build_vector_db()
 

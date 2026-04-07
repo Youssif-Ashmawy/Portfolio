@@ -20,10 +20,36 @@ fi
 echo "📦 Installing Python dependencies..."
 pip3 install -r requirements.txt
 
+# Download resume PDF from private assets repo if PAT is available
+RESUME_PDF="Youssif_Ashmawy_Resume_2.pdf"
+if [ ! -f "$RESUME_PDF" ] && [ -n "$ASSETS_PAT" ]; then
+    echo "📥 Downloading resume from private assets repo..."
+    curl -s -L \
+        -H "Authorization: token $ASSETS_PAT" \
+        -H "Accept: application/vnd.github.v3.raw" \
+        "https://api.github.com/repos/youssif-ashmawy/portfolio_assets/contents/$RESUME_PDF" \
+        -o "$RESUME_PDF"
+    if [ -f "$RESUME_PDF" ] && [ -s "$RESUME_PDF" ]; then
+        echo "✅ Resume downloaded"
+    else
+        echo "⚠️  Failed to download resume PDF"
+        rm -f "$RESUME_PDF"
+    fi
+fi
+
 # Build vector database if it doesn't exist
 if [ ! -d "chroma_db" ]; then
     echo "🗄️  Building vector database..."
-    python3 build_vector_db.py
+    if [ -f "$RESUME_PDF" ]; then
+        echo "📄 Building from $RESUME_PDF..."
+        python3 pdf_to_vector_db.py "$RESUME_PDF"
+    elif [ -f "data.txt" ]; then
+        echo "📄 Building from data.txt..."
+        python3 build_vector_db.py
+    else
+        echo "❌ No data source found (need $RESUME_PDF or data.txt)"
+        exit 1
+    fi
     echo "✅ Vector database built"
 else
     echo "✅ Vector database already exists"
