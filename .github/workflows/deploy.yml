@@ -22,7 +22,7 @@ jobs:
       - name: Checkout private assets
         uses: actions/checkout@v4
         with:
-          repository: youssif-ashmawy/portfolio-assets
+          repository: youssif-ashmawy/portfolio_assets
           token: ${{ secrets.ASSETS_PAT }}
           path: assets
 
