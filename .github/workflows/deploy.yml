@@ -19,12 +19,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Checkout private assets
+        uses: actions/checkout@v4
+        with:
+          repository: youssif-ashmawy/portfolio-assets
+          token: ${{ secrets.ASSETS_PAT }}
+          path: assets
+
       - name: Prepare frontend files
         run: |
           mkdir -p dist
           cp index.html styles.css script.js dist/
-          cp -r images dist/
-          cp COMP4905_Report.pdf dist/
+          cp -r assets/images dist/
+          cp assets/COMP4905_Report.pdf dist/
+          cp assets/data.txt dist/
+          cp assets/*.pdf dist/ 2>/dev/null || true
 
       - name: Inject backend URL
         # Replace the __BACKEND_URL__ placeholder with the real Render URL.
