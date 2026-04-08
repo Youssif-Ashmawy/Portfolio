@@ -100,7 +100,7 @@ Rules:
 4. Scan ALL context chunks and include EVERY item found — do not stop early.
 5. Formatting rules by content type:
    - Experience: "Company Name | Date Range" on one line, "Job Title, Location" on the next line, then bullet points for responsibilities. Blank line between jobs.
-   - Projects: "Project Name | Technologies" on one line, then bullet points. Blank line between projects.
+   - Projects: "Project Name" on one line, then "Skills used: [comma-separated list of technologies]" on the next line, then bullet points. Blank line between projects. Do NOT include GitHub Repo, Live Demo, Research Paper, or any links.
    - Skills: List each subcategory (e.g. "Programming Languages :") on its own line followed by bullet points. Include ALL subcategories present in the context. Blank line between subcategories.
 
 Context:
@@ -128,7 +128,7 @@ Rules:
 4. Scan ALL context chunks and include EVERY item found — do not stop early.
 5. Formatting rules by content type:
    - Experience: "Company Name | Date Range" on one line, "Job Title, Location" on the next line, then bullet points for responsibilities. Blank line between jobs.
-   - Projects: "Project Name | Technologies" on one line, then bullet points. Blank line between projects.
+   - Projects: "Project Name" on one line, then "Skills used: [comma-separated list of technologies]" on the next line, then bullet points. Blank line between projects. Do NOT include GitHub Repo, Live Demo, Research Paper, or any links.
    - Skills: List each subcategory (e.g. "Programming Languages :") on its own line followed by bullet points. Include ALL subcategories present in the context. Blank line between subcategories.
 
 Context:
