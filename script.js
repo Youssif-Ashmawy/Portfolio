@@ -666,16 +666,14 @@ class ChatInterface {
         try {
             const response = await fetch(`${this.apiUrl}/health`);
             if (response.ok) {
-                const data = await response.json();
-                this.updateStatus('Ready', 'normal');
-                if (!data.ollama_available) {
-                    this.updateStatus('AI ready — ask me anything!', 'normal');
-                }
+                await response.json();
+                this.updateStatus('AI ready — ask me anything!', 'normal');
             } else {
-                this.updateStatus('Server unavailable', 'error');
+                this.updateStatus('Ask me anything!', 'normal');
             }
         } catch (error) {
-            this.updateStatus('Cannot connect to server', 'error');
+            // Server may be sleeping on free tier — don't alarm the user on load
+            this.updateStatus('Ask me anything!', 'normal');
         }
     }
     
@@ -731,58 +729,65 @@ class ChatInterface {
     async sendMessage() {
         const message = this.chatInput.value.trim();
         if (!message || this.isTyping) return;
-        
+
         // Add user message
         this.addMessage(message, true);
-        
+
         // Clear input
         this.chatInput.value = '';
         this.chatInput.style.height = 'auto';
-        
+
         // Show typing status
         this.isTyping = true;
         this.updateStatus('Thinking...', 'typing');
         this.chatSend.disabled = true;
         this.chatInput.disabled = true;
-        
-        try {
-            const response = await fetch(`${this.apiUrl}/chat`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: message,
-                    model: 'llama3.2'
-                })
-            });
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+
+        const retryDelays = [15000, 20000]; // wait 15s, then 20s before giving up
+        let lastError;
+
+        for (let attempt = 0; attempt <= retryDelays.length; attempt++) {
+            try {
+                if (attempt === 1) {
+                    this.updateStatus('Waking up server...', 'typing');
+                } else if (attempt === 2) {
+                    this.updateStatus('Almost ready...', 'typing');
+                }
+
+                const response = await fetch(`${this.apiUrl}/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message, model: 'llama3.2' })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                this.addMessage(data.response);
+                this.updateStatus('Ready', 'normal');
+                lastError = null;
+                break;
+
+            } catch (error) {
+                lastError = error;
+                if (attempt < retryDelays.length) {
+                    await new Promise(resolve => setTimeout(resolve, retryDelays[attempt]));
+                }
             }
-            
-            const data = await response.json();
-            
-            // Add bot response
-            this.addMessage(data.response);
-            
-            // Update status
-            this.updateStatus('Ready', 'normal');
-            
-        } catch (error) {
-            console.error('Error sending message:', error);
-            
-            // Add error message
-            this.addMessage('Sorry, I encountered an error. Please make sure the server is running on localhost:8000.');
-            
-            // Update status
-            this.updateStatus('Error - Check server connection', 'error');
-        } finally {
-            this.isTyping = false;
-            this.chatSend.disabled = false;
-            this.chatInput.disabled = false;
-            this.chatInput.focus();
         }
+
+        if (lastError) {
+            console.error('Error sending message:', lastError);
+            this.addMessage('Sorry, I couldn\'t reach the server. Please try again in a moment.');
+            this.updateStatus('Error — please try again', 'error');
+        }
+
+        this.isTyping = false;
+        this.chatSend.disabled = false;
+        this.chatInput.disabled = false;
+        this.chatInput.focus();
     }
 }
 
