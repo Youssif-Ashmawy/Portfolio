@@ -25,7 +25,6 @@ app = FastAPI(title="Portfolio RAG API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -43,8 +42,14 @@ class RAGService:
         self.db_path = "./chroma_db"
         self.client = chromadb.PersistentClient(path=self.db_path)
         self.collection = self.client.get_collection("portfolio_data")
-        self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
+        self._embedding_model = None  # lazy-loaded on first request
         self.ollama_base_url = "http://localhost:11434"
+
+    @property
+    def embedding_model(self):
+        if self._embedding_model is None:
+            self._embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
+        return self._embedding_model
     
     def check_ollama_available(self) -> bool:
         """Check if Ollama is available."""
@@ -207,6 +212,7 @@ Answer:"""
 rag_service = RAGService()
 
 @app.get("/")
+@app.head("/")
 async def root():
     return {"message": "Portfolio RAG API is running"}
 
