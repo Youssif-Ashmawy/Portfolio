@@ -502,6 +502,7 @@ class ChatInterface {
         this.chatNotification = document.getElementById('chatNotification');
         this.chatStatus = document.getElementById('chatStatus');
         this.statusText = document.getElementById('statusText');
+        this.typingIndicator = document.getElementById('typingIndicator');
         this.resizeHandle = document.getElementById('resizeHandle');
         
         // Determine API URL based on current environment
@@ -682,10 +683,15 @@ class ChatInterface {
         this.statusText.textContent = text;
         this.chatStatus.className = 'chat-status';
         
+        // Show/hide typing indicator
         if (type === 'typing') {
             this.chatStatus.classList.add('typing');
-        } else if (type === 'error') {
-            this.chatStatus.classList.add('error');
+            this.typingIndicator.style.display = 'flex';
+        } else {
+            this.typingIndicator.style.display = 'none';
+            if (type === 'error') {
+                this.chatStatus.classList.add('error');
+            }
         }
     }
     
