@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import chromadb
-from sentence_transformers import SentenceTransformer
 try:
     import ollama
     OLLAMA_SDK_AVAILABLE = True
@@ -48,6 +47,7 @@ class RAGService:
     @property
     def embedding_model(self):
         if self._embedding_model is None:
+            from sentence_transformers import SentenceTransformer
             self._embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
         return self._embedding_model
     
@@ -62,9 +62,11 @@ class RAGService:
     def get_relevant_documents(self, query: str, n_results: int = 3) -> List[str]:
         """Retrieve relevant documents from the vector database."""
         try:
+            # Embed the query ourselves so ChromaDB doesn't load a second copy of the model
+            query_embedding = self.embedding_model.encode([query]).tolist()
             # Fetch many candidates to account for Resume Overview chunks crowding out section chunks
             results = self.collection.query(
-                query_texts=[query],
+                query_embeddings=query_embedding,
                 n_results=n_results * 5
             )
             docs = results['documents'][0] if results['documents'] else []
