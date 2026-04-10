@@ -514,6 +514,30 @@ img {
   transform: translateY(-2px);
 }
 
+.btn-purple {
+  border-color: var(--accent-1);
+  color: var(--accent-1);
+}
+
+.btn-purple:hover {
+  background: rgba(108, 92, 231, 0.15);
+  border-color: var(--accent-1);
+  color: var(--accent-1);
+  box-shadow: 0 4px 20px rgba(108, 92, 231, 0.35);
+}
+
+.btn-teal {
+  border-color: var(--accent-3);
+  color: var(--accent-3);
+}
+
+.btn-teal:hover {
+  background: rgba(0, 206, 201, 0.15);
+  border-color: var(--accent-3);
+  color: var(--accent-3);
+  box-shadow: 0 4px 20px rgba(0, 206, 201, 0.35);
+}
+
 /* Scroll indicator */
 .scroll-indicator {
   position: absolute;
