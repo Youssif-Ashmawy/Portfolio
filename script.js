@@ -727,6 +727,29 @@ class ChatInterface {
         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
     }
     
+    addThinkingMessage() {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message bot-message';
+
+        const avatar = document.createElement('div');
+        avatar.className = 'message-avatar';
+        avatar.textContent = '🤖';
+
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content thinking-message';
+        messageContent.innerHTML = `
+            <span class="thinking-dots">
+                <span></span><span></span><span></span>
+            </span>`;
+
+        messageDiv.appendChild(avatar);
+        messageDiv.appendChild(messageContent);
+        this.chatMessages.appendChild(messageDiv);
+        this.scrollToBottom();
+
+        return messageDiv;
+    }
+
     addWakeupMessage() {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'message bot-message';
@@ -764,14 +787,18 @@ class ChatInterface {
 
         // Show typing status
         this.isTyping = true;
-        this.updateStatus('Thinking...', 'typing');
+        this.updateStatus('', 'typing');
         this.chatSend.disabled = true;
         this.chatInput.disabled = true;
 
-        // On first message, show a wakeup notice (cold start)
+        // Show thinking bubble as a bot message
+        let thinkingMessage = this.addThinkingMessage();
+
+        // On first message, replace thinking with wakeup notice (cold start)
         let wakeupMessage = null;
         if (this.isFirstMessage) {
             this.isFirstMessage = false;
+            thinkingMessage.remove();
             wakeupMessage = this.addWakeupMessage();
         }
 
@@ -798,8 +825,9 @@ class ChatInterface {
 
                 const data = await response.json();
                 if (wakeupMessage) { wakeupMessage.remove(); wakeupMessage = null; }
+                if (thinkingMessage) { thinkingMessage.remove(); thinkingMessage = null; }
                 this.addMessage(data.response);
-                this.updateStatus('Ready', 'normal');
+                this.updateStatus('', 'normal');
                 lastError = null;
                 break;
 
@@ -814,6 +842,7 @@ class ChatInterface {
         if (lastError) {
             console.error('Error sending message:', lastError);
             if (wakeupMessage) { wakeupMessage.remove(); }
+            if (thinkingMessage) { thinkingMessage.remove(); }
             this.addMessage('Sorry, I couldn\'t reach the server. Please try again in a moment.');
             this.updateStatus('Error — please try again', 'error');
         }

@@ -1885,6 +1885,31 @@ img {
   animation-delay: 0s;
 }
 
+.thinking-message {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  min-width: 60px;
+}
+
+.thinking-dots {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.thinking-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-2);
+  animation: typingBounce 1.4s infinite ease-in-out;
+}
+
+.thinking-dots span:nth-child(1) { animation-delay: -0.32s; }
+.thinking-dots span:nth-child(2) { animation-delay: -0.16s; }
+.thinking-dots span:nth-child(3) { animation-delay: 0s; }
+
 .wakeup-message {
   display: flex;
   align-items: center;
