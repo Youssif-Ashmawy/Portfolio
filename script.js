@@ -520,6 +520,7 @@ class ChatInterface {
         this.isDragging = false;
         this.isResizing = false;
         this.dragOffset = { x: 0, y: 0 };
+        this.isFirstMessage = true;
         
         this.init();
     }
@@ -726,6 +727,30 @@ class ChatInterface {
         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
     }
     
+    addWakeupMessage() {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message bot-message';
+
+        const avatar = document.createElement('div');
+        avatar.className = 'message-avatar';
+        avatar.textContent = '🤖';
+
+        const messageContent = document.createElement('div');
+        messageContent.className = 'message-content wakeup-message';
+        messageContent.innerHTML = `
+            Waking up the RAG server...
+            <span class="wakeup-dots">
+                <span></span><span></span><span></span>
+            </span>`;
+
+        messageDiv.appendChild(avatar);
+        messageDiv.appendChild(messageContent);
+        this.chatMessages.appendChild(messageDiv);
+        this.scrollToBottom();
+
+        return messageDiv;
+    }
+
     async sendMessage() {
         const message = this.chatInput.value.trim();
         if (!message || this.isTyping) return;
@@ -742,6 +767,13 @@ class ChatInterface {
         this.updateStatus('Thinking...', 'typing');
         this.chatSend.disabled = true;
         this.chatInput.disabled = true;
+
+        // On first message, show a wakeup notice (cold start)
+        let wakeupMessage = null;
+        if (this.isFirstMessage) {
+            this.isFirstMessage = false;
+            wakeupMessage = this.addWakeupMessage();
+        }
 
         const retryDelays = [15000, 20000]; // wait 15s, then 20s before giving up
         let lastError;
@@ -765,6 +797,7 @@ class ChatInterface {
                 }
 
                 const data = await response.json();
+                if (wakeupMessage) { wakeupMessage.remove(); wakeupMessage = null; }
                 this.addMessage(data.response);
                 this.updateStatus('Ready', 'normal');
                 lastError = null;
@@ -780,6 +813,7 @@ class ChatInterface {
 
         if (lastError) {
             console.error('Error sending message:', lastError);
+            if (wakeupMessage) { wakeupMessage.remove(); }
             this.addMessage('Sorry, I couldn\'t reach the server. Please try again in a moment.');
             this.updateStatus('Error — please try again', 'error');
         }
