@@ -418,6 +418,12 @@ img {
 }
 
 @media (max-width: 768px) {
+  .bg-blobs,
+  .gradient-orb,
+  .mouse-glow {
+    display: none;
+  }
+
   .hero-content {
     max-width: 500px;
   }
