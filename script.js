@@ -194,9 +194,6 @@ function initGradientOrb() {
 // Initialize all enhanced background features
 function initEnhancedBackground() {
     createParticles();
-    initMouseGlow();
-    initEnhancedBlobParallax();
-    initGradientOrb();
 }
 
 // ============================================
