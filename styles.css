@@ -478,7 +478,12 @@ img {
   }
 
   .hero-content {
-    max-width: 500px;
+    max-width: 100%;
+  }
+
+  .hero-name {
+    white-space: normal;
+    font-size: clamp(2rem, 10vw, 3.5rem);
   }
 }
 
