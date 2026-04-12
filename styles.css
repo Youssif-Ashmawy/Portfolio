@@ -105,6 +105,7 @@ img {
    AMBIENT BACKGROUND BLOBS
    ============================================ */
 .bg-blobs {
+  display: none;
   position: fixed;
   inset: 0;
   z-index: -1;
@@ -224,6 +225,7 @@ img {
    GRADIENT ORB ANIMATION
    ============================================ */
 .gradient-orb {
+  display: none;
   position: fixed;
   width: 800px;
   height: 800px;
@@ -261,6 +263,7 @@ img {
    INTERACTIVE GLOW EFFECTS
    ============================================ */
 .mouse-glow {
+  display: none;
   position: fixed;
   width: 400px;
   height: 400px;
