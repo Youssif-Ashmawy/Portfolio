@@ -481,8 +481,8 @@ img {
     max-width: 100%;
   }
 
-  .hero-name {
-    white-space: normal;
+  .hero .hero-name {
+    white-space: normal !important;
     font-size: clamp(2rem, 10vw, 3.5rem);
   }
 }
