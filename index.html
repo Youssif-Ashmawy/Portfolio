@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youssif Ashmawy - Portfolio</title>
+    <meta name="description"
+        content="Personal portfolio showcasing educational journey, work experience, projects, and certifications">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+</head>
+
+<body>
+    <div class="particle-field" id="particleField"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-logo">YA</div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+            <li><a href="#skills">Skills</a></li>
+        </ul>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-layout">
+            <div class="hero-content">
+                <div class="hero-greeting">Hi, I'm</div>
+                <h1 class="hero-name">
+                    Youssif<br><span class="gradient-text">Ashmawy</span>
+                </h1>
+                <p class="hero-tagline">
+                    IT Systems Engineer and Computer Science graduate specializing in cloud platforms, AI/ML systems, and
+                    automation. Passionate about building innovative solutions and transforming complex
+                    challenges into opportunities.
+                </p>
+                <div class="hero-cta-group">
+                    <a href="mailto:ashmawyyoussif@gmail.com" class="btn btn-outline btn-purple">Get In Touch</a>
+                    <a href="https://drive.google.com/file/d/1pGtdCIFTWaMo6FPGO5B71rG0E6Hp261G/view?usp=drive_link" target="_blank" class="btn btn-outline btn-teal">View Resume</a>
+                </div>
+            </div>
+            <div class="hero-photo-wrapper">
+                <img src="images/Pic1.PNG" alt="Youssif Ashmawy" class="hero-photo">
+            </div>
+        </div>
+        
+        <!-- Chat Toggle Icon -->
+        <div class="chat-toggle-icon" id="chatToggleIcon">
+            <span class="chat-icon-symbol">💬</span>
+            <span class="chat-notification" id="chatNotification"></span>
+        </div>
+        
+        <!-- Chat Interface -->
+        <div class="chat-container" id="chatContainer" style="display: none;">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <span class="chat-icon">💬</span>
+                    Ask me about Youssif
+                </div>
+                <div class="chat-controls">
+                    <button class="chat-close" id="chatClose" title="Close">
+                        <span>×</span>
+                    </button>
+                </div>
+                <div class="resize-handle" id="resizeHandle"></div>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        <div class="message-content">
+                            Hi! I'm here to help you learn about Youssif's experience, projects, and skills. What would you like to know?
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input 
+                        type="text" 
+                        id="chatInput" 
+                        placeholder="Ask about my experience, projects, skills..." 
+                        class="chat-input"
+                        maxlength="500"
+                    />
+                    <button id="chatSend" class="chat-send-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="chat-status" id="chatStatus">
+                    <span id="statusText">Ready</span>
+                    <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="section" id="experience">
+        <div class="section-header reveal">
+            <div class="section-label">Career Journey</div>
+            <h2 class="section-title">Work Experience</h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item reveal reveal-delay-1">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">Sep 2025 – Present</div>
+                    <h3 class="timeline-role">IT Systems Engineer</h3>
+                    <div class="timeline-company">Kuberox Technologies</div>
+                    <p class="timeline-desc">
+                        Deployed and configured Nutanix hyperconverged cloud Kubernetes and AI platforms, integrated
+                        Hugging Face models,
+                        and completed client environment setup, accelerating production readiness.
+                    </p>
+                    <p class="timeline-desc">
+                        Built a dependency-aware Kubernetes migration orchestrator with FastAPI and NetworkX analyzing
+                        30+ CRDs, improving
+                        migration success rate by 30% and enabling staged workload execution.
+                    </p>
+                    <p class="timeline-desc">
+                        Conducted AI research and prompt engineered staged descriptive queries for Claude, optimizing responses and reducing token usage.
+                    </p>
+                    <p class="timeline-desc">
+                        Designed a two-phase migration workflow with Velero to minimize downtime by 50%.
+                    </p>
+                    <p class="timeline-desc">
+                        Implemented JWT authentication with FastAPI, PostgreSQL, and React with role-based access control.
+                    </p>
+                    <div class="timeline-tags">
+                        <span class="tag">Nutanix</span>
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag">FastAPI</span>
+                        <span class="tag">Hugging Face</span>
+                        <span class="tag">NetworkX</span>
+                        <span class="tag">Velero</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal reveal-delay-2">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <div class="timeline-date">May 2024 – Aug 2025</div>
+                    <h3 class="timeline-role">Cybersecurity Assistant</h3>
+                    <div class="timeline-company">Hydro Ottawa</div>
+                    <p class="timeline-desc">
+                        Automated GSD permission reports using Python, Node.js, Google APIs, and AWS, cutting manual
+                        effort by 75% and
+                        increasing data accuracy by 30%.
+                    </p>
+                    <p class="timeline-desc">
+                        Built on-demand reporting and executive dashboards with Google Apps Script and Python, reducing
+                        report generation
+                        latency by 60%.
+                    </p>
+                    <p class="timeline-desc">
+                        Developed automated retention workflows leveraging Iron Mountain API and mentored an intern,
+                        improving compliance
+                        readiness by 40%.
+                    </p>
+                    <div class="timeline-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">Google APIs</span>
+                        <span class="tag">AWS</span>
+                        <span class="tag">Google Apps Script</span>
+                        <span class="tag">Iron Mountain API</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="section" id="education">
+        <div class="section-header reveal">
+            <div class="section-label">Academic Background</div>
+            <h2 class="section-title">Education</h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="education-grid">
+            <div class="edu-card reveal reveal-delay-1">
+                <div class="edu-icon">🎓</div>
+                <h3 class="edu-degree">Bachelor of Computer Science Honours with High Distinction</h3>
+                <div class="edu-school">Carleton University</div>
+                <div class="edu-year">Sep 2022 – Aug 2025</div>
+                <p class="edu-desc">
+                    Graduated with High Distinction in Computer Science. Specialized in software engineering,
+                    AI/ML systems, and cybersecurity. Developed strong foundation in algorithms, data structures,
+                    and distributed systems.
+                </p>
+                <div class="edu-photo-wrapper">
+                    <img src="images/Degree_and_Medal.jpeg" alt="Degree and Medal" class="edu-photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+        <div class="section-header reveal">
+            <div class="section-label">Featured Work</div>
+            <h2 class="section-title">Projects</h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="projects-grid">
+            <div class="project-card reveal reveal-delay-1">
+                <div class="project-image">
+                    <img src="images/FancyGit.png" alt="FancyGit">
+                    <div class="project-overlay">
+                        <div class="project-overlay-links">
+                            <a href="https://github.com/youssif-ashmawy/Fancy_Git" target="_blank">GitHub</a>
+                            <a href="https://pypi.org/project/fancygit/" target="_blank">PyPI</a>
+                            <a href="https://youtu.be/iLTMxD8mAy0" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3 class="project-title">FancyGit</h3>
+                    <p class="project-desc">
+                        Intelligent CLI wrapper for Git that provides AI-generated explanations, dry-run previews, and
+                        interactive learning quizzes, simplifying Git for beginners. Implemented advanced commands
+                        consolidating multi-step operations into single safe actions.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tag">Python</span>
+                        <span class="tag">Git</span>
+                        <span class="tag">Ollama</span>
+                        <span class="tag">CI/CD</span>
+                        <span class="tag">PyPI</span>
+                        <span class="tag">GitHub Actions</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal reveal-delay-2">
+                <div class="project-image">
+                    <img src="images/TactileNet.png" alt="TactileNet">
+                    <div class="project-overlay">
+                        <div class="project-overlay-links">
+                            <a href="https://github.com/youssif-ashmawy/TactileNetModified" target="_blank">GitHub</a>
+                            <a href="COMP4905_Report.pdf" target="_blank">Research Paper</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3 class="project-title">TactileNetModified</h3>
+                    <p class="project-desc">
+                        Expanded tactile dataset and integrated multimodal feedback using Transformers, boosting model
+                        robustness by 25%. Optimized training pipeline with PyTorch, PEFT, LoRA, and Bitsandbytes,
+                        improving generalization and inference quality by 20%.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tag">Python</span>
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">Transformers</span>
+                        <span class="tag">Diffusers</span>
+                        <span class="tag">PEFT</span>
+                        <span class="tag">LoRA</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal reveal-delay-3">
+                <div class="project-image">
+                    <img src="images/MiMi_Assitant.png" alt="MiMi Assistant">
+                    <div class="project-overlay">
+                        <div class="project-overlay-links">
+                            <a href="https://github.com/youssif-ashmawy/MiMi_Assistant" target="_blank">GitHub</a>
+                            <a href="https://youtu.be/8huwApWujwk" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3 class="project-title">MiMi_Assistant</h3>
+                    <p class="project-desc">
+                        Built a privacy-first macOS assistant with offline wake word detection (80ms) and real-time
+                        gesture control for full system interaction. Distributed via Homebrew with CI/CD (GitHub
+                        Actions), automating tests, versioning, and deployment. Engineered a multi-threaded gesture
+                        pipeline, resolving concurrency issues and reducing latency for real-time performance.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tag">Python</span>
+                        <span class="tag">OpenCV</span>
+                        <span class="tag">MediaPipe</span>
+                        <span class="tag">PyAudio</span>
+                        <span class="tag">NumPy</span>
+                        <span class="tag">PyAutoGUI</span>
+                        <span class="tag">GitHub Actions</span>
+                        <span class="tag">Homebrew</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card reveal reveal-delay-4">
+                <div class="project-image">
+                    <img src="images/LeGraphTheory.png" alt="LeGraphTheory">
+                    <div class="project-overlay">
+                        <div class="project-overlay-links">
+                            <a href="https://github.com/JaiMorjaria/LeGraphTheory" target="_blank">GitHub</a>
+                            <a href="https://youtu.be/FZjFsaRdiX4" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3 class="project-title">LeGraphTheory</h3>
+                    <p class="project-desc">
+                        Constructed NBA assist networks from PBP Stats API data, modeled as weighted graphs with
+                        NetworkX
+                        to analyze team structure. Computed graph metrics and visualized team dynamics, revealing
+                        patterns consistent with Braess' Paradox and star-player acquisition impacts.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tag">Python</span>
+                        <span class="tag">NetworkX</span>
+                        <span class="tag">NetGraph</span>
+                        <span class="tag">Seaborn</span>
+                        <span class="tag">PBP Stats API</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal reveal-delay-1">
+                <div class="project-image">
+                    <img src="images/RAG_ME.png" alt="RAG_ME">
+                    <div class="project-overlay">
+                        <div class="project-overlay-links">
+                            <a href="https://github.com/Youssif-Ashmawy/RAG_ME" target="_blank">GitHub</a>
+                            <a href="https://youtu.be/Higr_ffd7Qk" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3 class="project-title">RAG_ME</h3>
+                    <p class="project-desc">
+                        Built a GitHub RAG chatbot using LangChain, Groq (Llama 3.3 70B), and fastembed for GPU-free code Q&A.
+                        Implemented hybrid retrieval with BM25 + cosine similarity and Reciprocal Rank Fusion for higher accuracy.
+                        Deployed via Docker + Streamlit with local ONNX embeddings for zero-cost hosting.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tag">Python</span>
+                        <span class="tag">LangChain</span>
+                        <span class="tag">Groq API</span>
+                        <span class="tag">RAG</span>
+                        <span class="tag">Streamlit</span>
+                        <span class="tag">fastembed</span>
+                        <span class="tag">Hybrid Search</span>
+                        <span class="tag">Docker</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal reveal-delay-2">
+                <div class="project-image">
+                    <img src="images/MLOps.png" alt="MLOps-Bias-Monitoring-Pipeline">
+                    <div class="project-overlay">
+                        <div class="project-overlay-links">
+                            <a href="https://github.com/Youssif-Ashmawy/MLOps-Bias-Monitoring-Pipeline" target="_blank">GitHub</a>
+                            <a href="https://drive.google.com/file/d/1XkeuOJh_vip3hbgxfYwNw75miX6_E4Oq/view?usp=sharing" target="_blank">Project Report</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3 class="project-title">MLOps-Bias-Monitoring-Pipeline</h3>
+                    <p class="project-desc">
+                        Designed a real-time ML system with Kafka + XGBoost in a producer-consumer architecture for scalable inference.
+                        Applied Fairlearn for bias monitoring, reducing Equalized Odds Difference from 1.0 to 0.10 while maintaining 85% accuracy.
+                        Built MLOps pipeline with MLflow tracking, Optuna (30 trials), and Streamlit dashboard for bias monitoring.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tag">Python</span>
+                        <span class="tag">Kafka</span>
+                        <span class="tag">MLflow</span>
+                        <span class="tag">Docker</span>
+                        <span class="tag">Optuna</span>
+                        <span class="tag">XGBoost</span>
+                        <span class="tag">Fairlearn</span>
+                        <span class="tag">Streamlit</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card reveal reveal-delay-3">
+                <div class="project-image">
+                    <img src="images/Portfolio.png" alt="Portfolio">
+                    <div class="project-overlay">
+                        <div class="project-overlay-links">
+                            <a href="https://github.com/Youssif-Ashmawy/Portfolio" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <h3 class="project-title">Portfolio</h3>
+                    <p class="project-desc">
+                        Built this personal portfolio with an AI-powered RAG chatbot backed by a FastAPI server deployed on Render,
+                        enabling visitors to interactively query experience and projects. Deployed on GitHub Pages with
+                        a CI/CD pipeline that pulls assets from a private repo and injects secrets at build time.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">FastAPI</span>
+                        <span class="tag">RAG</span>
+                        <span class="tag">GitHub Actions</span>
+                        <span class="tag">GitHub Pages</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="section" id="certifications">
+        <div class="section-header reveal">
+            <div class="section-label">Professional Development</div>
+            <h2 class="section-title">Certifications</h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="certs-grid">
+            <div class="cert-card reveal reveal-delay-1">
+                <div class="cert-badge">
+                    <img src="images/NCA.png" alt="Nutanix Certified Associate"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
+                <h3 class="cert-name">Nutanix Certified Associate 6</h3>
+                <div class="cert-issuer">Nutanix</div>
+                <div class="cert-date">Expires Feb 16, 2029</div>
+                <a href="https://www.credly.com/earner/earned/badge/719f1e82-f7e3-4fc0-9a8e-8bf27473575e"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+            </div>
+
+            <div class="cert-card reveal reveal-delay-2">
+                <div class="cert-badge">
+                    <img src="images/MCI.png" alt="Nutanix Certified Professional - Multicloud Infrastructure"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
+                <h3 class="cert-name">Nutanix Certified Professional - Multicloud Infrastructure 6</h3>
+                <div class="cert-issuer">Nutanix</div>
+                <div class="cert-date">Expires Feb 16, 2029</div>
+                <a href="https://www.credly.com/earner/earned/badge/c03a7f28-d514-40d4-81d9-3a3b669660ad"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+            </div>
+
+            <div class="cert-card reveal reveal-delay-3">
+                <div class="cert-badge">
+                    <img src="images/AI.png" alt="Nutanix Certified Professional - Artificial Intelligence"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
+                <h3 class="cert-name">Nutanix Certified Professional - Artificial Intelligence 6</h3>
+                <div class="cert-issuer">Nutanix</div>
+                <div class="cert-date">Expires Feb 27, 2029</div>
+                <a href="https://www.credly.com/earner/earned/badge/173c21e8-bbc3-4571-a920-e00759ea27ff"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+            </div>
+
+            <div class="cert-card reveal reveal-delay-1">
+                <div class="cert-badge">
+                    <img src="images/CN.png" alt="Nutanix Certified Professional - Cloud Native"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
+                <h3 class="cert-name">Nutanix Certified Professional - Cloud Native 6</h3>
+                <div class="cert-issuer">Nutanix</div>
+                <div class="cert-date">Expires Feb 16, 2029</div>
+                <a href="https://www.credly.com/earner/earned/badge/2fb908e6-c7a8-4efb-be6a-c58316b324f5"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+            </div>
+
+            <div class="cert-card reveal reveal-delay-2">
+                <div class="cert-badge">
+                    <img src="images/MCA.png" alt="Nutanix Certified Professional - Multicloud Automation"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
+                <h3 class="cert-name">Nutanix Certified Professional - Multicloud Automation 6</h3>
+                <div class="cert-issuer">Nutanix</div>
+                <div class="cert-date">Expires Feb 16, 2029</div>
+                <a href="https://www.credly.com/earner/earned/badge/1290c481-fd41-4cbe-a071-adcb6382dbd8"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+            </div>
+
+            <div class="cert-card reveal reveal-delay-3">
+                <div class="cert-badge">
+                    <img src="images/RHCSA.png" alt="Red Hat Certified System Administrator"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
+                <h3 class="cert-name">Red Hat Certified System Administrator (RHCSA)</h3>
+                <div class="cert-issuer">Red Hat</div>
+                <div class="cert-date">Expires Nov 24, 2028</div>
+                <a href="https://www.credly.com/earner/earned/badge/5f5ac1c4-7b6b-4fce-be3f-421618be936a"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+            </div>
+
+            <div class="cert-card reveal reveal-delay-1">
+                <div class="cert-badge">
+                    <img src="images/GOOGLE.png" alt="Google Cybersecurity Professional Certificate"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
+                <h3 class="cert-name">Google Cybersecurity Professional Certificate V2</h3>
+                <div class="cert-issuer">Coursera</div>
+                <div class="cert-date">Issued Jun 7, 2024 -- No expiration date</div>
+                <a href="https://www.credly.com/earner/earned/badge/23f09042-b93d-4d26-aa4f-4e040aeaea9e"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+            </div>
+
+            <div class="cert-card reveal reveal-delay-2">
+                <div class="cert-badge">
+                    <img src="images/Azure_AI.png" alt="Microsoft Certified: Azure AI Fundamentals"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
+                <h3 class="cert-name">Microsoft Certified: Azure AI Fundamentals</h3>
+                <div class="cert-issuer">Microsoft</div>
+                <div class="cert-date">Issued Apr 2026</div>
+                <a href="https://learn.microsoft.com/api/credentials/share/en-us/YoussifAshmawy-4691/2A11FB149B7D2F0F?sharingId"
+                    target="_blank" rel="noopener noreferrer" class="btn btn-outline"
+                    style="margin-top: 1rem; font-size: 0.8rem; padding: 0.5rem 1rem;">View Certificate</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section" id="skills">
+        <div class="section-header reveal">
+            <div class="section-label">Technical Expertise</div>
+            <h2 class="section-title">Skills & Tools</h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-category reveal reveal-delay-1">
+                <div class="skill-icon">💻</div>
+                <h3 class="skill-title">Languages</h3>
+                <div class="skill-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Java</span>
+                    <span class="tag">C</span>
+                    <span class="tag">C++</span>
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">SQL</span>
+                    <span class="tag">HTML</span>
+                    <span class="tag">CSS</span>
+                    <span class="tag">Scheme</span>
+                </div>
+            </div>
+
+            <div class="skill-category reveal reveal-delay-2">
+                <div class="skill-icon">☁️</div>
+                <h3 class="skill-title">Cloud/DevOps</h3>
+                <div class="skill-tags">
+                    <span class="tag">AWS</span>
+                    <span class="tag">Nutanix</span>
+                    <span class="tag">Azure</span>
+                    <span class="tag">Docker</span>
+                    <span class="tag">Kubernetes</span>
+                    <span class="tag">Linux</span>
+                    <span class="tag">CI/CD</span>
+                    <span class="tag">GitHub Actions</span>
+                    <span class="tag">Velero</span>
+                    <span class="tag">OpenStack</span>
+                </div>
+            </div>
+
+            <div class="skill-category reveal reveal-delay-3">
+                <div class="skill-icon">🔧</div>
+                <h3 class="skill-title">Frameworks</h3>
+                <div class="skill-tags">
+                    <span class="tag">React</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">PyTest</span>
+                    <span class="tag">FastAPI</span>
+                    <span class="tag">JWT Authentication</span>
+                </div>
+            </div>
+
+            <div class="skill-category reveal reveal-delay-4">
+                <div class="skill-icon">🗄️</div>
+                <h3 class="skill-title">Databases/Object Storage</h3>
+                <div class="skill-tags">
+                    <span class="tag">PostgreSQL</span>
+                    <span class="tag">SQLite</span>
+                    <span class="tag">MongoDB</span>
+                    <span class="tag">ChromaDB</span>
+                    <span class="tag">MinIO</span>
+                    <span class="tag">S3 Bucket</span>
+                </div>
+            </div>
+
+            <div class="skill-category reveal reveal-delay-1">
+                <div class="skill-icon">🤖</div>
+                <h3 class="skill-title">AI/ML</h3>
+                <div class="skill-tags">
+                    <span class="tag">PyTorch</span>
+                    <span class="tag">Transformers</span>
+                    <span class="tag">Diffusers</span>
+                    <span class="tag">Scikit-Learn</span>
+                    <span class="tag">OpenCV</span>
+                    <span class="tag">RAG</span>
+                    <span class="tag">Claude</span>
+                    <span class="tag">MCP</span>
+                    <span class="tag">MLflow</span>
+                </div>
+            </div>
+
+            <div class="skill-category reveal reveal-delay-2">
+                <div class="skill-icon">🛠️</div>
+                <h3 class="skill-title">Developer Tools</h3>
+                <div class="skill-tags">
+                    <span class="tag">Git</span>
+                    <span class="tag">Jupyter Notebook</span>
+                    <span class="tag">Postman</span>
+                    <span class="tag">Grafana</span>
+                    <span class="tag">NetworkX</span>
+                    <span class="tag">NetGraph</span>
+                    <span class="tag">Seaborn</span>
+                    <span class="tag">Kafka</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-links">
+            <a href="https://github.com/youssif-ashmawy" target="_blank" rel="noopener noreferrer">
+                <span>📦</span> GitHub
+            </a>
+            <a href="https://linkedin.com/in/youssif-ashmawy" target="_blank" rel="noopener noreferrer">
+                <span>💼</span> LinkedIn
+            </a>
+            <a href="mailto:ashmawyyoussif@gmail.com">
+                <span>📧</span> Email
+            </a>
+            <a href="tel:+966-543-241-340" target="_blank" rel="noopener noreferrer">
+                <span>📞</span> Phone
+            </a>
+        </div>
+        <div class="footer-copyright">
+            © 2026 Youssif Ashmawy. All rights reserved. Built with passion and lots of ☕
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <img id="modalImage" src="" alt="Project Image">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
