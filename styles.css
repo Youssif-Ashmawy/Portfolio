@@ -428,6 +428,7 @@ img {
   width: 420px;
   height: 420px;
   object-fit: cover;
+  object-position: top;
   border-radius: 50%;
   border: 3px solid var(--accent-1);
   box-shadow: 0 0 30px rgba(108, 92, 231, 0.3);
