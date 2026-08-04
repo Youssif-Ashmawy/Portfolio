@@ -1,16 +1,17 @@
+import os
+import re
+
+import chromadb
+import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import chromadb
+
 try:
     import ollama
     OLLAMA_SDK_AVAILABLE = True
 except ImportError:
     OLLAMA_SDK_AVAILABLE = False
-import requests
-import re
-from typing import List
-import os
 
 try:
     from groq import Groq
@@ -34,7 +35,7 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     response: str
-    sources: List[str]
+    sources: list[str]
 
 class RAGService:
     def __init__(self):
@@ -56,10 +57,10 @@ class RAGService:
         try:
             response = requests.get(f"{self.ollama_base_url}/api/tags", timeout=5)
             return response.status_code == 200
-        except Exception:
+        except Exception:  # noqa: BLE001
             return False
     
-    def get_relevant_documents(self, query: str, n_results: int = 3) -> List[str]:
+    def get_relevant_documents(self, query: str, n_results: int = 3) -> list[str]:
         """Retrieve relevant documents from the vector database."""
         try:
             # Embed the query ourselves so ChromaDB doesn't load a second copy of the model
@@ -75,7 +76,7 @@ class RAGService:
             overview_docs = [d for d in docs if d.startswith("Resume Overview:")]
             combined = section_docs + overview_docs
             return combined[:n_results * 2]
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"Error retrieving documents: {e}")
             return []
     
@@ -156,7 +157,7 @@ Answer:"""
                     response = ollama.generate(model=model, prompt=prompt)
                     return self.format_response(response['response'])
                 raise ImportError("ollama SDK not installed")
-            except Exception:
+            except Exception:  # noqa: BLE001
                 # Fallback to direct API call
                 response = requests.post(
                     f"{self.ollama_base_url}/api/generate",
@@ -171,9 +172,9 @@ Answer:"""
                     return self.format_response(response.json().get('response', 'Sorry, I could not generate a response.'))
                 else:
                     return f"Error from Ollama: {response.status_code}"
-                    
-        except Exception as e:
-            return f"Error generating response: {str(e)}"
+
+        except Exception as e:  # noqa: BLE001
+            return f"Error generating response: {e!s}"
     
     def generate_fallback_response(self, query: str, context: str) -> str:
         """Generate a simple fallback response without Ollama."""
@@ -261,9 +262,9 @@ async def chat(request: ChatRequest):
             response=response,
             sources=relevant_docs
         )
-        
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing request: {str(e)}")
+
+    except Exception as e:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=f"Error processing request: {e!s}")
 
 @app.get("/models")
 async def get_available_models():
@@ -271,16 +272,16 @@ async def get_available_models():
     try:
         if not rag_service.check_ollama_available():
             return {"models": [], "message": "Ollama is not available"}
-        
-        response = requests.get(f"{rag_service.ollama_base_url}/api/tags")
+
+        response = requests.get(f"{rag_service.ollama_base_url}/api/tags")  # noqa: ASYNC210
         if response.status_code == 200:
             models = response.json().get('models', [])
             return {"models": [model['name'] for model in models]}
         else:
             return {"models": [], "message": "Could not retrieve models"}
-            
-    except Exception as e:
-        return {"models": [], "message": f"Error: {str(e)}"}
+
+    except Exception as e:  # noqa: BLE001
+        return {"models": [], "message": f"Error: {e!s}"}
 
 if __name__ == "__main__":
     import uvicorn

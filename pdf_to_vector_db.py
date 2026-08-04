@@ -1,9 +1,10 @@
-import PyPDF2
-import re
-import chromadb
-from sentence_transformers import SentenceTransformer
-from typing import List, Dict
 import os
+import re
+
+import chromadb
+import PyPDF2
+from sentence_transformers import SentenceTransformer
+
 
 class PDFDataExtractor:
     def __init__(self, pdf_path: str):
@@ -27,11 +28,11 @@ class PDFDataExtractor:
                     text += page.extract_text() + "\n"
                 
                 return text
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             print(f"Error extracting PDF: {e}")
             return ""
     
-    def parse_resume_data(self, text: str) -> List[Dict[str, str]]:
+    def parse_resume_data(self, text: str) -> list[dict[str, str]]:
         """Parse resume text into structured sections."""
         documents = []
         
@@ -106,7 +107,7 @@ class PDFDataExtractor:
         
         return documents
     
-    def chunk_documents(self, documents: List[Dict[str, str]], chunk_size: int = 600) -> List[str]:
+    def chunk_documents(self, documents: list[dict[str, str]], chunk_size: int = 600) -> list[str]:
         """Split documents into smaller chunks for better retrieval."""
         chunks = []
         
@@ -149,12 +150,13 @@ class PDFDataExtractor:
         # Clear existing collection
         try:
             self.collection.delete()
-            self.collection = self.client.get_or_create_collection(
-                name="portfolio_data",
-                metadata={"hnsw:space": "cosine"}
-            )
-        except Exception:
+        except Exception:  # noqa: BLE001, S110
+            # Collection might not exist yet, which is fine
             pass
+        self.collection = self.client.get_or_create_collection(
+            name="portfolio_data",
+            metadata={"hnsw:space": "cosine"}
+        )
 
         print("💾 Storing in ChromaDB...")
         # Add documents to collection

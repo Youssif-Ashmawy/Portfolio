@@ -1,7 +1,9 @@
+import os
+import sys
+
 import chromadb
 from sentence_transformers import SentenceTransformer
-from typing import List, Dict
-import os
+
 
 class VectorDBBuilder:
     def __init__(self, data_file: str = "data.txt", db_path: str = "./chroma_db"):
@@ -14,7 +16,7 @@ class VectorDBBuilder:
             metadata={"hnsw:space": "cosine"}
         )
     
-    def parse_data_file(self) -> List[Dict[str, str]]:
+    def parse_data_file(self) -> list[dict[str, str]]:
         """Parse the data.txt file and extract structured information."""
         with open(self.data_file, 'r', encoding='utf-8') as file:
             content = file.read()
@@ -65,7 +67,7 @@ class VectorDBBuilder:
         
         return documents
     
-    def chunk_documents(self, documents: List[Dict[str, str]], chunk_size: int = 500) -> List[str]:
+    def chunk_documents(self, documents: list[dict[str, str]], chunk_size: int = 500) -> list[str]:
         """Split documents into smaller chunks for better retrieval."""
         chunks = []
         
@@ -99,12 +101,13 @@ class VectorDBBuilder:
         # Clear existing collection
         try:
             self.collection.delete()
-            self.collection = self.client.get_or_create_collection(
-                name="portfolio_data",
-                metadata={"hnsw:space": "cosine"}
-            )
-        except Exception:
+        except Exception:  # noqa: BLE001, S110
+            # Collection might not exist yet, which is fine
             pass
+        self.collection = self.client.get_or_create_collection(
+            name="portfolio_data",
+            metadata={"hnsw:space": "cosine"}
+        )
 
         print("Storing in ChromaDB...")
         # Add documents to collection
@@ -135,7 +138,7 @@ if __name__ == "__main__":
     # Check if data file exists
     if not os.path.exists("data.txt"):
         print("Error: data.txt file not found!")
-        exit(1)
+        sys.exit(1)
     
     builder = VectorDBBuilder()
     builder.build_vector_db()

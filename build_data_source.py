@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import os
-import sys
 import shutil
-from datetime import datetime
+import sys
+from datetime import datetime, timezone
+
 
 def switch_data_source(source):
     """Switch between different data sources for the RAG system."""
@@ -12,7 +13,7 @@ def switch_data_source(source):
     
     # Backup current vector database if it exists
     if os.path.exists("./chroma_db"):
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
         backup_path = f"./chroma_db_backup_{timestamp}"
         shutil.move("./chroma_db", backup_path)
         print(f"📦 Backed up current database to: {backup_path}")
@@ -34,11 +35,11 @@ def switch_data_source(source):
 def main():
     if len(sys.argv) != 2:
         print("Usage: python3 build_data_source.py [txt|pdf]")
-        print("")
+        print()
         print("Examples:")
         print("  python3 build_data_source.py txt   # Build from data.txt")
         print("  python3 build_data_source.py pdf   # Build from PDF resume")
-        print("")
+        print()
         print("Current files:")
         if os.path.exists("data.txt"):
             print("  📄 data.txt - " + str(os.path.getsize("data.txt")) + " bytes")
