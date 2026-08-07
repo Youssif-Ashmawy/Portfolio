@@ -1,0 +1,65 @@
+Youssif Ashmawy
+ 054-324-1340 # ashmawyyoussif@gmail.com ï linkedin.com/in/youssif-ashmawy § github.com/Youssif-Ashmawy ç SCE-ID-1207094
+Experience
+DataScience ME Jun 2026 – Present
+Machine Learning Engineer Riyadh, Saudi Arabia
+• Leveraging Dataiku to Develop and deploy end-to-end ML pipelines and models in production environments.
+• Implementing MLOps practices to streamline model lifecycle management, monitoring, and CI/CD workflows.
+Kuberox Technologies Sep 2025 – May 2026
+IT Systems Engineer Riyadh, Saudi Arabia
+• Deployed and configured Nutanix hyperconverged Kubernetes and AI platforms, accelerating production readiness.
+• Designed two-phase Velero migration workflow, reducing downtime by 50%.
+• Prompt engineered staged descriptive queries for Claude, optimizing responses and reducing token usage.
+• Implemented JWT authentication with FastAPI, PostgreSQL, and React with role-based access control.
+Hydro Ottawa May 2024 – Aug 2025
+Cybersecurity Assistant Ottawa, Canada
+• Automated GSD reports (Python, Node.js, AWS), cutting manual effort by 75% and improving accuracy by 30%.
+• Built on-demand dashboards and reporting tools, reducing report latency by 60%.
+• Developed automated retention workflows via Iron Mountain API, improving compliance readiness by 40%.
+Projects
+FancyGit | Python, Git, Ollama, CI/CD, PyPI, GitHub Actions | GitHub, PyPI, Demo
+• Led the development of an intelligent CLI wrapper for Git that provides AI-generated explanations, dry-run previews, and interactive learning quizzes.
+• Implemented advanced commands consolidating multi-step operations into single safe actions.
+• Built a full CI/CD pipeline using GitHub Actions with unit/integration tests and automated PyPI deployment.
+TactileNet Modified | Python, PyTorch, Transformers, Diffusers | GitHub Repo, Research Paper
+• Expanded tactile dataset and integrated multimodal feedback using Transformers, boosting model robustness by 25%.
+• Optimized training pipeline with PyTorch, PEFT, LoRA, and Bitsandbytes, improving generalization.
+• Benchmarked multiple Hugging Face models to select the optimal architecture, improving inference quality by 20%.
+MiMi_Assistant | Python, OpenCV, MediaPipe, PyAudio | GitHub, Demo
+• Built a privacy-first macOS assistant with offline wake word detection (80ms) and real-time gesture control.
+• Distributed via Homebrew with CI/CD (GitHub Actions), automating tests, versioning, and deployment.
+• Engineered a multi-threaded gesture pipeline, resolving concurrency issues and reducing latency.
+LeGraphTheory | Python, NetworkX, NetGraph, Seaborn | GitHub, Demo
+• Constructed NBA assist networks from PBP Stats API data, modeled as weighted graphs with NetworkX.
+• Computed graph metrics and visualized team dynamics with Seaborn, revealing patterns consistent with Braess' Paradox.
+• Analyzed impact of star-player acquisitions, providing actionable insights for team strategy.
+RAG ME | Python, LangChain, Groq API, RAG, Streamlit, fastembed, Hybrid Search, Docker | GitHub Repo, Live Demo
+• Built GitHub RAG chatbot using LangChain, Groq (Llama 3.3 70B), and fastembed for GPU-free code Q&A.
+• Implemented hybrid retrieval with BM25 + cosine similarity and Reciprocal Rank Fusion for higher accuracy.
+• Deployed via Docker + Streamlit with local ONNX embeddings for zero-cost hosting.
+MLOps Bias Monitoring Pipeline | Python, Kafka, MLflow, Docker, Optuna, XGBoost, Fairlearn, Streamlit | GitHub Repo, Project Report
+• Designed real-time ML system with Kafka + XGBoost in producer-consumer architecture for scalable inference.
+• Applied Fairlearn for bias monitoring, reducing Equalized Odds Difference 1.0 → 0.10 while maintaining 85% accuracy.
+• Built MLOps pipeline with MLflow tracking, Optuna (30 trials), and Streamlit dashboard for bias monitoring.
+Portfolio | HTML, CSS, JavaScript, Python, FastAPI, Docker, GitHub Actions | GitHub
+• Built this personal portfolio site with a RAG-powered chat assistant backed by FastAPI and ChromaDB.
+• Built a CI/CD pipeline that pulls assets from a private repo and injects secrets at build time.
+Education
+Carleton University Sep 2022 – Aug 2025
+Bachelor of Computer Science Honours with High Distinction Ottawa, Canada
+Certifications
+Nutanix Certified Associate 6
+Nutanix Certified Professional - Multicloud Infrastructure 6
+Nutanix Certified Professional - Artificial Intelligence 6
+Nutanix Certified Professional - Cloud Native 6
+Nutanix Certified Professional - Multicloud Automation 6
+Red Hat Certified System Administrator (RHCSA)
+Google Cybersecurity Professional Certificate V2
+Microsoft Certified: Azure AI Fundamentals
+Technical Skills & Tools
+Languages: Python, Java, C, C++, JavaScript, SQL, HTML, CSS, Scheme
+Cloud/DevOps: AWS, Nutanix, Azure, Docker, Kubernetes, Linux, CI/CD, GitHub Actions, Velero, OpenStack
+Frameworks: React, Node.js, PyTest, FastAPI, JWT authentication
+Databases/Object Storage: PostgreSQL, SQLite, MongoDB, ChromaDB, MinIO, S3 Bucket
+AI/ML: PyTorch, Transformers, Diffusers, Scikit-Learn, OpenCV, RAG, Claude, MCP, MLflow
+Developer Tools: Git, Jupyter Notebook, Postman, Grafana, NetworkX, NetGraph, Seaborn, Kafka
