@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youssif Ashmawy</title>
+    <meta name="description"
+        content="Youssif Ashmawy, MLOps engineer. LLM inference tuning, GPU scheduling and AI infrastructure. Experience, projects and certifications.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@300;400;600;800&family=Instrument+Sans:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2210%22 fill=%22%23161b22%22/><text x=%2232%22 y=%2242%22 font-family=%22monospace%22 font-weight=%22700%22 font-size=%2228%22 fill=%22%23f0a53a%22 text-anchor=%22middle%22>YA</text></svg>">
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- Query bar -->
+        <header class="panel query">
+            <span class="live">serving</span>
+            <span class="k">trace</span><span class="v">youssif.ashmawy</span>
+            <span class="k">range=</span><span class="v">2022-09 → now</span>
+            <span class="k">region=</span><span class="v">riyadh</span>
+            <nav aria-label="Sections">
+                <a href="#trace">experience</a>
+                <a href="#projects">projects</a>
+                <a href="#certs">certs</a>
+                <a href="#ask">ask</a>
+            </nav>
+        </header>
+
+        <!-- Hero: live inference replay -->
+        <section class="hero" id="home">
+            <div class="panel photo">
+                <img src="images/Pic3.jpg" alt="Youssif Ashmawy">
+            </div>
+            <div class="panel who">
+                <div class="label">MLOps engineer · BSF · Riyadh</div>
+                <h1>Youssif<br><span>Ashmawy</span></h1>
+                <div class="stream">
+                    <div class="cmd"><span>$</span> generate --model youssif-bio --max-tokens 40</div>
+                    <p class="out" id="out">I make <b>self-hosted</b> <b>LLMs</b> answer <b>ten</b> <b>times</b> <b>faster.</b> At BSF I tune vLLM, schedule GPUs and build the Grafana boards that show when something slows down.</p>
+                </div>
+                <div id="meter">
+                    <div class="meter">
+                        <div class="m"><span class="label">ttft</span><span class="v" id="ttft">41 ms</span></div>
+                        <div class="m"><span class="label">tokens / s</span><span class="v" id="tps">138</span></div>
+                        <div class="m"><span class="label">tokens</span><span class="v" id="ntok">24</span></div>
+                        <div class="m"><span class="label">gpu 0</span><span class="v" id="gpu">72%</span>
+                            <div class="bar"><i id="gpuBar"></i></div>
+                        </div>
+                        <div class="controls">
+                            <div class="seg" role="group" aria-label="Serving config">
+                                <button type="button" id="tuned" aria-pressed="true">tuned</button>
+                                <button type="button" id="untuned" aria-pressed="false">before tuning</button>
+                            </div>
+                            <button type="button" class="replay" id="replay">↻ replay</button>
+                        </div>
+                    </div>
+                    <p class="note" id="note">Illustrative replay. Same model and GPU with tuned serving; the 10× gap matches the real <b>90%</b> latency cut at BSF.</p>
+                </div>
+                <div class="links">
+                    <a class="btn solid" href="#ask">Ask about my work</a>
+                    <a class="btn" href="https://drive.google.com/file/d/1pGtdCIFTWaMo6FPGO5B71rG0E6Hp261G/view?usp=drive_link" target="_blank" rel="noopener">Resume ↗</a>
+                    <a class="btn" href="mailto:ashmawyyoussif@gmail.com">Email</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results -->
+        <section class="stats" aria-label="Results">
+            <div class="panel stat" data-before="100" data-after="10">
+                <span class="label">LLM response time · BSF</span>
+                <span class="num">−90<small>%</small></span>
+                <span class="ctx">by tuning vLLM serving</span>
+            </div>
+            <div class="panel stat" data-before="100" data-after="50">
+                <span class="label">Migration downtime · Nutanix</span>
+                <span class="num">−50<small>%</small></span>
+                <span class="ctx">with a two-phase Velero rollout</span>
+            </div>
+            <div class="panel stat" data-before="1.0" data-after="0.1" data-raw>
+                <span class="label">Fairness gap · ML pipeline</span>
+                <span class="num">1.0<span class="to">→</span>0.1</span>
+                <span class="ctx">with Fairlearn, at 85% accuracy</span>
+            </div>
+            <div class="panel stat" data-before="100" data-after="25">
+                <span class="label">Manual work on reports · Hydro Ottawa</span>
+                <span class="num">−75<small>%</small></span>
+                <span class="ctx">by automating with Python, Node.js and AWS</span>
+            </div>
+            <div class="panel stat" data-before="100" data-after="125">
+                <span class="label">Model robustness · TactileNet</span>
+                <span class="num">+25<small>%</small></span>
+                <span class="ctx">with more multimodal training data</span>
+            </div>
+        </section>
+
+        <!-- Career trace -->
+        <section class="panel" id="trace" aria-labelledby="trace-h">
+            <div class="panel-head">
+                <h2 id="trace-h">Career trace</h2>
+                <span class="label">click a span</span>
+            </div>
+            <div class="trace-scroll">
+                <div class="trace-grid" id="grid"></div>
+            </div>
+            <ol class="jobs" id="jobs">
+            <!-- AUTO:EXPERIENCE:START -->
+            <li class="job" data-id="bsf" data-svc="bsf" data-from="2026-06" data-to="">
+                <div class="job-head">
+                    <h3 class="job-role">MLOps Engineer</h3>
+                    <div class="job-company">Banque Saudi Fransi (BSF)</div>
+                    <div class="job-meta">Jun 2026 – Present · Riyadh, Saudi Arabia</div>
+                </div>
+                <div>
+                    <ul class="job-points">
+                        <li><span class="key">latency</span><span>Optimized latency of locally hosted LLMs by tuning <strong>vLLM</strong> inference parameters <span class="delta">−90% latency</span></span></li>
+                        <li><span class="key">observe</span><span>Built a <strong>Grafana</strong> dashboard on vLLM and <strong>DCGM</strong> metrics to monitor LLM performance and GPU utilization</span></li>
+                        <li><span class="key">scale</span><span>Redesigning <strong>GPU allocation</strong> and request load balancing to scale concurrent-user throughput <span class="delta">in progress</span></span></li>
+                        <li><span class="key">deploy</span><span>Developed a CI/CD-style pipeline in <strong>Dataiku</strong> to manage model and app deployment</span></li>
+                    </ul>
+                    <div class="job-tags"><span>vLLM</span><span>Grafana</span><span>DCGM</span><span>GPU allocation</span><span>CI/CD</span><span>Dataiku</span></div>
+                </div>
+            </li>
+            <li class="job" data-id="nutanix" data-svc="nutanix" data-from="2025-09" data-to="2026-05">
+                <div class="job-head">
+                    <h3 class="job-role">AI Systems Engineer</h3>
+                    <div class="job-company">Nutanix</div>
+                    <div class="job-meta">Sep 2025 – May 2026 · Riyadh, Saudi Arabia</div>
+                </div>
+                <div>
+                    <ul class="job-points">
+                        <li><span class="key">platform</span><span>Deployed and configured <strong>Nutanix</strong> hyperconverged <strong>Kubernetes</strong> and AI platforms, accelerating production readiness</span></li>
+                        <li><span class="key">migrate</span><span>Designed a two-phase <strong>Velero</strong> migration workflow <span class="delta">−50% downtime</span></span></li>
+                        <li><span class="key">prompts</span><span>Prompt-engineered staged descriptive queries for <strong>Claude</strong>, improving responses and reducing token usage</span></li>
+                    </ul>
+                    <div class="job-tags"><span>Nutanix</span><span>Kubernetes</span><span>AI</span><span>Velero</span><span>Prompt engineering</span></div>
+                </div>
+            </li>
+            <li class="job" data-id="hydro" data-svc="hydro-ottawa" data-from="2024-05" data-to="2025-08">
+                <div class="job-head">
+                    <h3 class="job-role">Automation Engineer</h3>
+                    <div class="job-company">Hydro Ottawa</div>
+                    <div class="job-meta">May 2024 – Aug 2025 · Ottawa, Canada</div>
+                </div>
+                <div>
+                    <ul class="job-points">
+                        <li><span class="key">reports</span><span>Automated GSD reports with <strong>Python</strong>, <strong>Node.js</strong> and <strong>AWS</strong> <span class="delta">−75% manual effort · +30% accuracy</span></span></li>
+                        <li><span class="key">dashboards</span><span>Built on-demand dashboards and reporting tools <span class="delta">−60% report latency</span></span></li>
+                        <li><span class="key">retention</span><span>Automated retention workflows on the <strong>Iron Mountain API</strong> <span class="delta">+40% compliance readiness</span></span></li>
+                    </ul>
+                    <div class="job-tags"><span>Python</span><span>Node.js</span><span>AWS</span><span>Google Apps Script</span><span>Iron Mountain API</span></div>
+                </div>
+            </li>
+            <!-- AUTO:EXPERIENCE:END -->
+            <li class="job" data-id="carleton" data-svc="carleton-university" data-from="2022-09" data-to="2025-08" data-kind="edu">
+                <div class="job-head">
+                    <h3 class="job-role">B.CS Honours, High Distinction</h3>
+                    <div class="job-company">Carleton University</div>
+                    <div class="job-meta">Sep 2022 – Aug 2025 · Ottawa, Canada</div>
+                    <img class="job-photo" src="images/Degree_and_Medal.jpeg" alt="Degree and medal" loading="lazy">
+                </div>
+                <div>
+                    <ul class="job-points">
+                        <li><span class="key">focus</span><span>Software engineering, AI/ML systems and cybersecurity</span></li>
+                        <li><span class="key">core</span><span>Algorithms, data structures and distributed systems</span></li>
+                        <li><span class="key">thesis</span><span>TactileNet Modified (COMP 4905) <span class="delta">+25% robustness</span></span></li>
+                    </ul>
+                </div>
+            </li>
+            </ol>
+        </section>
+
+        <div class="two">
+            <!-- Projects -->
+            <section class="panel" id="projects" aria-labelledby="proj-h">
+                <div class="panel-head">
+                    <h2 id="proj-h">Projects</h2>
+                    <span class="label" id="projCount"></span>
+                </div>
+                <ul class="projects">
+            <!-- AUTO:PROJECTS:START -->
+            <li class="proj">
+                <div class="shot"><img src="images/MLOps.png" alt="MLOps Bias Monitoring Pipeline dashboard" loading="lazy"></div>
+                <div>
+                    <h3>MLOps Bias Monitoring Pipeline <span class="kind">ml system</span></h3>
+                    <p>Real-time inference with Kafka and XGBoost in a producer-consumer design. Fairlearn monitoring cut Equalized Odds Difference from <strong>1.0 to 0.10</strong> at 85% accuracy. MLflow tracking, Optuna tuning and a Streamlit bias dashboard.</p>
+                    <div class="stack">Kafka · XGBoost · Fairlearn · MLflow · Optuna · Docker</div>
+                    <div class="plinks"><a href="https://github.com/Youssif-Ashmawy/MLOps-Bias-Monitoring-Pipeline" target="_blank" rel="noopener">repo ↗</a><a href="https://drive.google.com/file/d/1XkeuOJh_vip3hbgxfYwNw75miX6_E4Oq/view?usp=sharing" target="_blank" rel="noopener">report ↗</a></div>
+                </div>
+            </li>
+            <li class="proj">
+                <div class="shot"><img src="images/RAG_ME.png" alt="RAG ME interface" loading="lazy"></div>
+                <div>
+                    <h3>RAG ME <span class="kind">llm app</span></h3>
+                    <p>Code Q&amp;A over GitHub repos with LangChain and Llama 3.3 70B on Groq. Hybrid BM25 plus cosine retrieval merged with Reciprocal Rank Fusion. Local ONNX embeddings, so it hosts for <strong>$0</strong>.</p>
+                    <div class="stack">LangChain · Groq · fastembed · Streamlit · Docker</div>
+                    <div class="plinks"><a href="https://github.com/Youssif-Ashmawy/RAG_ME" target="_blank" rel="noopener">repo ↗</a><a href="https://youtu.be/Higr_ffd7Qk" target="_blank" rel="noopener">demo ↗</a></div>
+                </div>
+            </li>
+            <li class="proj">
+                <div class="shot"><img src="images/FancyGit.png" alt="FancyGit terminal output" loading="lazy"></div>
+                <div>
+                    <h3>FancyGit <span class="kind">cli · pypi</span></h3>
+                    <p>A Git wrapper that explains each command with AI, previews it as a dry run and quizzes you after. Multi-step operations become single safe commands.</p>
+                    <div class="stack">Python · Ollama · GitHub Actions · PyPI</div>
+                    <div class="plinks"><a href="https://github.com/youssif-ashmawy/Fancy_Git" target="_blank" rel="noopener">repo ↗</a><a href="https://pypi.org/project/fancygit/" target="_blank" rel="noopener">pypi ↗</a><a href="https://youtu.be/iLTMxD8mAy0" target="_blank" rel="noopener">demo ↗</a></div>
+                </div>
+            </li>
+            <li class="proj">
+                <div class="shot"><img src="images/MiMi_Assitant.png" alt="MiMi Assistant on macOS" loading="lazy"></div>
+                <div>
+                    <h3>MiMi Assistant <span class="kind">macos · homebrew</span></h3>
+                    <p>Privacy-first assistant with an <strong>80 ms</strong> offline wake word and real-time gesture control on a multi-threaded pipeline.</p>
+                    <div class="stack">OpenCV · MediaPipe · PyAudio · Homebrew</div>
+                    <div class="plinks"><a href="https://github.com/youssif-ashmawy/MiMi_Assistant" target="_blank" rel="noopener">repo ↗</a><a href="https://youtu.be/8huwApWujwk" target="_blank" rel="noopener">demo ↗</a></div>
+                </div>
+            </li>
+            <li class="proj">
+                <div class="shot"><img src="images/TactileNet.png" alt="TactileNet samples" loading="lazy"></div>
+                <div>
+                    <h3>TactileNet Modified <span class="kind">research</span></h3>
+                    <p>Expanded tactile dataset with multimodal feedback, <strong>+25%</strong> robustness. LoRA, PEFT and bitsandbytes fine-tuning, +20% inference quality.</p>
+                    <div class="stack">PyTorch · Transformers · Diffusers · PEFT</div>
+                    <div class="plinks"><a href="https://github.com/youssif-ashmawy/TactileNetModified" target="_blank" rel="noopener">repo ↗</a><a href="COMP4905_Report.pdf" target="_blank" rel="noopener">paper ↗</a></div>
+                </div>
+            </li>
+            <li class="proj">
+                <div class="shot"><img src="images/LeGraphTheory.png" alt="NBA assist network graph" loading="lazy"></div>
+                <div>
+                    <h3>LeGraphTheory <span class="kind">research</span></h3>
+                    <p>NBA assist networks as weighted graphs in NetworkX. Star signings show patterns consistent with Braess' paradox.</p>
+                    <div class="stack">NetworkX · NetGraph · Seaborn · PBP Stats API</div>
+                    <div class="plinks"><a href="https://github.com/JaiMorjaria/LeGraphTheory" target="_blank" rel="noopener">repo ↗</a><a href="https://youtu.be/FZjFsaRdiX4" target="_blank" rel="noopener">demo ↗</a></div>
+                </div>
+            </li>
+            <li class="proj">
+                <div class="shot"><img src="images/Portfolio.png" alt="This portfolio" loading="lazy"></div>
+                <div>
+                    <h3>This site <span class="kind">rag · ci/cd</span></h3>
+                    <p>RAG chatbot on FastAPI and Render. GitHub Actions pulls assets from a private repo, injects secrets and rebuilds the vector store on every deploy.</p>
+                    <div class="stack">FastAPI · ChromaDB · Docker · GitHub Pages</div>
+                    <div class="plinks"><a href="https://github.com/Youssif-Ashmawy/Portfolio" target="_blank" rel="noopener">repo ↗</a></div>
+                </div>
+            </li>
+            <!-- AUTO:PROJECTS:END -->
+                </ul>
+            </section>
+
+            <div class="side">
+                <!-- Certifications -->
+                <section class="panel" id="certs" aria-labelledby="cert-h">
+                    <div class="panel-head">
+                        <h2 id="cert-h">Certifications</h2>
+                        <span class="label">valid to</span>
+                    </div>
+                    <ul class="certs">
+            <!-- AUTO:CERTS:START -->
+            <li><a href="https://www.credly.com/earner/earned/badge/173c21e8-bbc3-4571-a920-e00759ea27ff" target="_blank" rel="noopener"><img src="images/AI.png" alt="" loading="lazy"><span>NCP · Artificial Intelligence<span class="iss">Nutanix</span></span><span class="code">2029-02</span></a></li>
+            <li><a href="https://www.credly.com/earner/earned/badge/2fb908e6-c7a8-4efb-be6a-c58316b324f5" target="_blank" rel="noopener"><img src="images/CN.png" alt="" loading="lazy"><span>NCP · Cloud Native<span class="iss">Nutanix</span></span><span class="code">2029-02</span></a></li>
+            <li><a href="https://www.credly.com/earner/earned/badge/c03a7f28-d514-40d4-81d9-3a3b669660ad" target="_blank" rel="noopener"><img src="images/MCI.png" alt="" loading="lazy"><span>NCP · Multicloud Infrastructure<span class="iss">Nutanix</span></span><span class="code">2029-02</span></a></li>
+            <li><a href="https://www.credly.com/earner/earned/badge/1290c481-fd41-4cbe-a071-adcb6382dbd8" target="_blank" rel="noopener"><img src="images/MCA.png" alt="" loading="lazy"><span>NCP · Multicloud Automation<span class="iss">Nutanix</span></span><span class="code">2029-02</span></a></li>
+            <li><a href="https://www.credly.com/earner/earned/badge/719f1e82-f7e3-4fc0-9a8e-8bf27473575e" target="_blank" rel="noopener"><img src="images/NCA.png" alt="" loading="lazy"><span>Certified Associate<span class="iss">Nutanix</span></span><span class="code">2029-02</span></a></li>
+            <li><a href="https://www.credly.com/earner/earned/badge/5f5ac1c4-7b6b-4fce-be3f-421618be936a" target="_blank" rel="noopener"><img src="images/RHCSA.png" alt="" loading="lazy"><span>RHCSA<span class="iss">Red Hat</span></span><span class="code">2028-11</span></a></li>
+            <li><a href="https://learn.microsoft.com/api/credentials/share/en-us/YoussifAshmawy-4691/2A11FB149B7D2F0F?sharingId" target="_blank" rel="noopener"><img src="images/Azure_AI.png" alt="" loading="lazy"><span>Azure AI Fundamentals<span class="iss">Microsoft</span></span><span class="code">no expiry</span></a></li>
+            <li><a href="https://www.credly.com/earner/earned/badge/23f09042-b93d-4d26-aa4f-4e040aeaea9e" target="_blank" rel="noopener"><img src="images/GOOGLE.png" alt="" loading="lazy"><span>Cybersecurity Professional<span class="iss">Google</span></span><span class="code">no expiry</span></a></li>
+            <!-- AUTO:CERTS:END -->
+                    </ul>
+                </section>
+
+                <!-- Stack -->
+                <section class="panel" id="skills" aria-labelledby="stack-h">
+                    <div class="panel-head">
+                        <h2 id="stack-h">Stack</h2>
+                        <span class="label">by job</span>
+                    </div>
+                    <dl class="stack-list">
+            <!-- AUTO:SKILLS:START -->
+            <div><dt>serving</dt><dd>vLLM, Docker, Kubernetes, FastAPI, Linux</dd></div>
+            <div><dt>observe</dt><dd>Grafana, DCGM, MLflow</dd></div>
+            <div><dt>ml</dt><dd>PyTorch, Transformers, Diffusers, scikit-learn, OpenCV, RAG, MCP, Claude</dd></div>
+            <div><dt>platform</dt><dd>Nutanix, AWS, Azure, OpenStack, Velero, GitHub Actions</dd></div>
+            <div><dt>data</dt><dd>PostgreSQL, MongoDB, SQLite, ChromaDB, MinIO, S3, Kafka</dd></div>
+            <div><dt>languages</dt><dd>Python, C, C++, Java, JavaScript, SQL</dd></div>
+            <div><dt>web</dt><dd>React, Node.js, JWT auth, PyTest</dd></div>
+            <!-- AUTO:SKILLS:END -->
+                    </dl>
+                </section>
+            </div>
+        </div>
+
+        <!-- Ask: RAG chat -->
+        <section class="panel ask" id="ask" aria-labelledby="ask-h">
+            <div class="panel-head">
+                <h2 id="ask-h">Ask about my work</h2>
+                <span class="label">answers come only from my resume</span>
+            </div>
+            <form id="askForm" autocomplete="off">
+                <span class="prompt" aria-hidden="true">&gt;</span>
+                <label for="q" class="sr">Question</label>
+                <input id="q" name="q" maxlength="500" placeholder="ask anything about my experience, projects or skills" required>
+                <button type="submit" id="askSend">Run</button>
+            </form>
+            <div class="suggest" id="suggest">
+                <button type="button">Where do you work now?</button>
+                <button type="button">What did you do at Nutanix?</button>
+                <button type="button">Which certifications do you hold?</button>
+                <button type="button">Tell me about RAG ME</button>
+            </div>
+            <div class="thread" id="thread" aria-live="polite"></div>
+        </section>
+
+        <footer class="panel foot">
+            <span>© 2026 Youssif Ashmawy</span>
+            <nav aria-label="Contact">
+                <a href="https://github.com/youssif-ashmawy" target="_blank" rel="noopener">github ↗</a>
+                <a href="https://linkedin.com/in/youssif-ashmawy" target="_blank" rel="noopener">linkedin ↗</a>
+                <a href="https://drive.google.com/file/d/1pGtdCIFTWaMo6FPGO5B71rG0E6Hp261G/view?usp=drive_link" target="_blank" rel="noopener">resume ↗</a>
+                <a href="mailto:ashmawyyoussif@gmail.com">ashmawyyoussif@gmail.com</a>
+            </nav>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
