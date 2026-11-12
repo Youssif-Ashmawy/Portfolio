@@ -183,11 +183,11 @@ Answer:"""
         
         if any(word in query_lower for word in ['experience', 'work', 'job']):
             if 'kubernetes' in query_lower or 'k8s' in query_lower:
-                return "Based on the portfolio, Youssif has extensive experience with Kubernetes. At Kuberox Technologies, he deployed and configured Nutanix hyperconverged cloud Kubernetes platforms and built a dependency-aware Kubernetes migration orchestrator using FastAPI and NetworkX."
+                return "Based on the portfolio, Youssif has extensive experience with Kubernetes. At Nutanix, he deployed and configured Nutanix hyperconverged cloud Kubernetes platforms and built a dependency-aware Kubernetes migration orchestrator using FastAPI and NetworkX."
             elif 'nutanix' in query_lower:
-                return "Youssif works at Kuberox Technologies as an IT Systems Engineer where he deploys and configures Nutanix hyperconverged cloud Kubernetes and AI platforms. He also holds multiple Nutanix certifications including NCA, NCP-MCI, NCP-CN, NCP-MCA, and NCP-AI."
+                return "Youssif works at Nutanix as an IT Systems Engineer where he deploys and configures Nutanix hyperconverged cloud Kubernetes and AI platforms. He also holds multiple Nutanix certifications including NCA, NCP-MCI, NCP-CN, NCP-MCA, and NCP-AI."
             else:
-                return "Youssif works as an IT Systems Engineer at Kuberox Technologies and previously as a Cybersecurity Assistant at Hydro Ottawa. He has experience with cloud platforms, AI/ML systems, and cybersecurity automation."
+                return "Youssif works as an IT Systems Engineer at Nutanix and previously as a Cybersecurity Assistant at Hydro Ottawa. He has experience with cloud platforms, AI/ML systems, and cybersecurity automation."
         
         elif any(word in query_lower for word in ['education', 'degree', 'university', 'college']):
             return "Youssif graduated with a Bachelor of Computer Science Honours with High Distinction from Carleton University (Sep 2022 - Aug 2025)."

@@ -73,7 +73,7 @@ Basic Questions:
 • "What are your technical skills?"
 
 Advanced Questions:
-• "Describe your work at Kuberox Technologies"
+• "Describe your work at Nutanix"
 • "What technologies did you use in TactileNet?"
 • "How did you improve processes at Hydro Ottawa?"
 • "What programming languages do you know?"

@@ -23,15 +23,15 @@ ARG ASSETS_PAT
 RUN curl -fsSL \
     -H "Authorization: token ${ASSETS_PAT}" \
     -H "Accept: application/vnd.github.v3.raw" \
-    "https://api.github.com/repos/youssif-ashmawy/portfolio_assets/contents/Youssif_Ashmawy_Resume_2.pdf" \
-    -o Youssif_Ashmawy_Resume_2.pdf
+    "https://api.github.com/repos/youssif-ashmawy/portfolio_assets/contents/Youssif_Ashmawy_Resume.pdf" \
+    -o Youssif_Ashmawy_Resume.pdf
 
 # Build the vector DB using the exact chromadb version installed above.
 # This guarantees no schema mismatch between the DB and the running code.
-RUN python3 pdf_to_vector_db.py Youssif_Ashmawy_Resume_2.pdf
+RUN python3 pdf_to_vector_db.py Youssif_Ashmawy_Resume.pdf
 
 # Remove the PDF after building the DB (not needed at runtime)
-RUN rm Youssif_Ashmawy_Resume_2.pdf
+RUN rm Youssif_Ashmawy_Resume.pdf
 
 # Render (and most PaaS providers) inject a $PORT environment variable.
 # Default to 8000 for local docker run.

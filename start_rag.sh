@@ -21,7 +21,7 @@ echo "📦 Installing Python dependencies..."
 pip3 install -r requirements.txt
 
 # Download resume PDF from private assets repo if PAT is available
-RESUME_PDF="Youssif_Ashmawy_Resume_2.pdf"
+RESUME_PDF="Youssif_Ashmawy_Resume.pdf"
 if [ ! -f "$RESUME_PDF" ] && [ -n "$ASSETS_PAT" ]; then
     echo "📥 Downloading resume from private assets repo..."
     curl -s -L \
