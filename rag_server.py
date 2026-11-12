@@ -155,9 +155,12 @@ Question: {query}
 
 Answer:"""
 
+        # llama-3.3-70b-versatile was shut down by Groq; override with GROQ_MODEL if this one is retired too
         completion = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            max_tokens=1024,
+            model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
+            max_completion_tokens=2048,
+            reasoning_effort="low",
+            include_reasoning=False,
             messages=[{"role": "user", "content": prompt}]
         )
         return self.format_response(completion.choices[0].message.content)
