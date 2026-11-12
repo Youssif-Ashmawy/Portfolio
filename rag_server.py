@@ -1,11 +1,13 @@
 import os
 import re
+import time
+from collections import defaultdict, deque
 
 import chromadb
 import requests
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 try:
     import ollama
@@ -29,9 +31,44 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+MAX_MESSAGE_CHARS = 500
+RATE_LIMIT_REQUESTS = 10
+RATE_LIMIT_WINDOW_SECONDS = 60
+
 class ChatRequest(BaseModel):
-    message: str
+    message: str = Field(min_length=1, max_length=MAX_MESSAGE_CHARS)
     model: str = "llama3.2"
+
+class RateLimiter:
+    """In-memory sliding-window limit per client IP (single Render instance)."""
+
+    def __init__(self, max_requests: int, window_seconds: int):
+        self.max_requests = max_requests
+        self.window_seconds = window_seconds
+        self.hits: dict[str, deque] = defaultdict(deque)
+
+    def allow(self, key: str) -> bool:
+        now = time.monotonic()
+        hits = self.hits[key]
+        while hits and now - hits[0] > self.window_seconds:
+            hits.popleft()
+        if len(hits) >= self.max_requests:
+            return False
+        hits.append(now)
+        # Drop idle clients so the table doesn't grow forever
+        if len(self.hits) > 10_000:
+            for k in [k for k, v in self.hits.items() if not v]:
+                del self.hits[k]
+        return True
+
+rate_limiter = RateLimiter(RATE_LIMIT_REQUESTS, RATE_LIMIT_WINDOW_SECONDS)
+
+def client_ip(request: Request) -> str:
+    # Render sits behind a proxy; the first X-Forwarded-For entry is the visitor
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
 
 class ChatResponse(BaseModel):
     response: str
@@ -183,11 +220,13 @@ Answer:"""
         
         if any(word in query_lower for word in ['experience', 'work', 'job']):
             if 'kubernetes' in query_lower or 'k8s' in query_lower:
-                return "Based on the portfolio, Youssif has extensive experience with Kubernetes. At Nutanix, he deployed and configured Nutanix hyperconverged cloud Kubernetes platforms and built a dependency-aware Kubernetes migration orchestrator using FastAPI and NetworkX."
+                return "At Nutanix, Youssif deployed and configured Nutanix hyperconverged Kubernetes and AI platforms, and designed a two-phase Velero migration workflow that reduced downtime by 50%."
             elif 'nutanix' in query_lower:
-                return "Youssif works at Nutanix as an IT Systems Engineer where he deploys and configures Nutanix hyperconverged cloud Kubernetes and AI platforms. He also holds multiple Nutanix certifications including NCA, NCP-MCI, NCP-CN, NCP-MCA, and NCP-AI."
+                return "Youssif was an AI Systems Engineer at Nutanix (Sep 2025 - May 2026), where he deployed Nutanix hyperconverged Kubernetes and AI platforms and cut migration downtime by 50% with a two-phase Velero workflow. He holds five Nutanix certifications: NCA, NCP-MCI, NCP-CN, NCP-MCA and NCP-AI."
+            elif 'bsf' in query_lower or 'fransi' in query_lower or 'vllm' in query_lower:
+                return "Youssif is an MLOps Engineer at Banque Saudi Fransi (BSF) since Jun 2026. He cut the latency of locally hosted LLMs by 90% by tuning vLLM inference parameters, built a Grafana dashboard on vLLM and DCGM metrics, and is redesigning GPU allocation and load balancing."
             else:
-                return "Youssif works as an IT Systems Engineer at Nutanix and previously as a Cybersecurity Assistant at Hydro Ottawa. He has experience with cloud platforms, AI/ML systems, and cybersecurity automation."
+                return "Youssif is an MLOps Engineer at Banque Saudi Fransi (BSF). Before that he was an AI Systems Engineer at Nutanix and an Automation Engineer at Hydro Ottawa."
         
         elif any(word in query_lower for word in ['education', 'degree', 'university', 'college']):
             return "Youssif graduated with a Bachelor of Computer Science Honours with High Distinction from Carleton University (Sep 2022 - Aug 2025)."
@@ -200,10 +239,10 @@ Answer:"""
             elif 'graph' in query_lower:
                 return "LeGraphTheory constructed NBA assist networks from PBP Stats API data, modeled as weighted graphs with NetworkX to analyze team structure and dynamics."
             else:
-                return "Youssif has worked on several projects including FancyGit (AI-powered Git CLI), TactileNet (multimodal tactile learning), and LeGraphTheory (NBA network analysis)."
-        
+                return "Youssif's projects include the MLOps Bias Monitoring Pipeline (Kafka, XGBoost, Fairlearn), RAG ME (GitHub code Q&A with hybrid retrieval), FancyGit (AI-powered Git CLI), MiMi Assistant (offline macOS assistant), TactileNet Modified (multimodal tactile learning) and LeGraphTheory (NBA network analysis)."
+
         elif any(word in query_lower for word in ['skill', 'skills', 'technology', 'tech']):
-            return "Youssif's technical skills include: Programming Languages (Python, Java, C/C++, HTML/CSS, JavaScript, SQL, NodeJS, React), DevOps & Cloud (Nutanix, AWS, Docker, Kubernetes, Linux, Git, CI/CD), and Technologies (PyTorch, Transformers, Scikit-Learn, NetworkX)."
+            return "Youssif's skills include: Languages (Python, Java, C, C++, JavaScript, SQL), Cloud/DevOps (AWS, Nutanix, Azure, Docker, Kubernetes, Linux, CI/CD, GitHub Actions, Velero, OpenStack), AI/ML (PyTorch, Transformers, Diffusers, Scikit-Learn, OpenCV, RAG, MLflow) and tools such as Grafana and Kafka."
         
         elif any(word in query_lower for word in ['contact', 'email', 'phone']):
             return "You can contact Youssif at ashmawyyoussif@gmail.com or +966-543-241-340. His GitHub is github.com/youssif-ashmawy and LinkedIn is linkedin.com/in/youssif-ashmawy."
@@ -230,8 +269,13 @@ async def health_check():
     }
 
 @app.post("/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
+async def chat(request: ChatRequest, http_request: Request):
     """Chat endpoint with RAG functionality."""
+    if not rate_limiter.allow(client_ip(http_request)):
+        raise HTTPException(
+            status_code=429,
+            detail="Too many questions in a short time. Please wait a minute and try again.",
+        )
     try:
         # Retrieve relevant documents
         relevant_docs = rag_service.get_relevant_documents(request.message, n_results=5)
