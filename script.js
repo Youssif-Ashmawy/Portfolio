@@ -221,6 +221,9 @@ function initAsk() {
         turn.innerHTML = `<div class="q"></div><div class="a wait">retrieving…</div>`;
         turn.querySelector('.q').textContent = message;
         thread.prepend(turn);
+        // Newest question sits on top; keep the window there and drop very old turns
+        thread.scrollTop = 0;
+        while (thread.children.length > 20) thread.lastElementChild.remove();
         const answer = turn.querySelector('.a');
 
         send.disabled = true;

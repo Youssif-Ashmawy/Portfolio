@@ -884,6 +884,13 @@ a:focus-visible {
   border-color: var(--dim);
 }
 
+.thread {
+  max-height: min(60vh, 520px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
 .thread:empty {
   display: none;
 }
