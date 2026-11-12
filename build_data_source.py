@@ -3,7 +3,7 @@
 import os
 import shutil
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 
 def switch_data_source(source):
@@ -13,7 +13,7 @@ def switch_data_source(source):
     
     # Backup current vector database if it exists
     if os.path.exists("./chroma_db"):
-        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+        timestamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
         backup_path = f"./chroma_db_backup_{timestamp}"
         shutil.move("./chroma_db", backup_path)
         print(f"📦 Backed up current database to: {backup_path}")
